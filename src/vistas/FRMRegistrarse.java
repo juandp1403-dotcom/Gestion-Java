@@ -50,6 +50,7 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
         bt_crearusuario = new javax.swing.JButton();
 
         setClosable(true);
+        setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

@@ -61,7 +61,6 @@ public class MDI_inventario extends javax.swing.JFrame {
 
         itemRegistrarse.setMnemonic('s');
         itemRegistrarse.setText("Registrarse");
-        itemRegistrarse.addActionListener(this::itemRegistrarseActionPerformed);
         fileMenu.add(itemRegistrarse);
 
         itemLogin.setMnemonic('a');
@@ -120,7 +119,7 @@ public class MDI_inventario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
         );
 
         pack();
@@ -130,10 +129,6 @@ public class MDI_inventario extends javax.swing.JFrame {
         modelo.ConexionBD.desconectar();
         System.exit(0);
     }//GEN-LAST:event_itemSalirActionPerformed
-
-    private void itemRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRegistrarseActionPerformed
-        
-    }//GEN-LAST:event_itemRegistrarseActionPerformed
 
     private void itemLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLoginActionPerformed
         fLogin.setVisible(true);
