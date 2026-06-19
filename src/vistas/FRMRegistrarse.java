@@ -22,6 +22,7 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
     
     private void limpiarCampos (){
         txt_nombre.setText("");
+        txt_correo.setText("");
         pf_contraseña.setText("");
         ps_confi_contraseña.setText("");
         cbx_rol.setSelectedIndex(0);
@@ -48,13 +49,15 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
         cbx_rol = new javax.swing.JComboBox<>();
         bt_cancelar = new javax.swing.JButton();
         bt_crearusuario = new javax.swing.JButton();
+        txt_correo = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Registrarse ");
+        jLabel1.setText("Crear Usuario");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nombre");
@@ -68,13 +71,16 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Rol");
 
-        cbx_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Aprendiz", "Intructor", "Auditor", "Revisor", "Admin" }));
+        cbx_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona un rol", "Aprendiz", "Intructor", "Auditor", "Revisor", "Admin" }));
 
         bt_cancelar.setText("Cancelar");
         bt_cancelar.addActionListener(this::bt_cancelarActionPerformed);
 
         bt_crearusuario.setText("Crear usuario ");
         bt_crearusuario.addActionListener(this::bt_crearusuarioActionPerformed);
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Correo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,18 +98,23 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pf_contraseña)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ps_confi_contraseña, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 257, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(bt_cancelar)
-                                .addGap(279, 279, 279))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(bt_crearusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(261, 261, 261))))))
+                        .addComponent(bt_crearusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(261, 261, 261))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(278, 278, 278)
+                .addComponent(bt_cancelar)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ps_confi_contraseña)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_correo))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,6 +125,10 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -126,11 +141,11 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbx_rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bt_cancelar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bt_crearusuario)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,7 +158,7 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -151,6 +166,7 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
 
     private void bt_crearusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_crearusuarioActionPerformed
         String nombre = txt_nombre.getText();
+        String correo = txt_correo.getText();
         String contraseña = String.valueOf(pf_contraseña.getPassword());
         String confirmar = String.valueOf(ps_confi_contraseña.getPassword());
 
@@ -160,7 +176,16 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
                 "Debe ingresar un nombre",
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
+        
         return;
+    }
+    
+    if (correo.isEmpty()){
+        JOptionPane.showMessageDialog(this,
+                "Debe ingresar un correo electronico",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        
     }
 
    
@@ -207,9 +232,11 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField pf_contraseña;
     private javax.swing.JPasswordField ps_confi_contraseña;
+    private javax.swing.JTextField txt_correo;
     private javax.swing.JTextField txt_nombre;
     // End of variables declaration//GEN-END:variables
 }

@@ -53,7 +53,7 @@ public class FRMLogin extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Sistema de Inventario ");
+        jLabel1.setText("Sistema de Gestión de Inventarios");
 
         jLabel2.setFont(new java.awt.Font("Century", 0, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

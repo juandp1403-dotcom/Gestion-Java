@@ -61,7 +61,7 @@ public class FRMMenu extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Sistema de Inventario ");
+        jLabel1.setText("Sistema de Gestión de Inventarios ");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Usuario: admin");
