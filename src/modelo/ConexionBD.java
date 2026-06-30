@@ -23,6 +23,10 @@ public class ConexionBD {
             InputStream Input = getClass()
                     .getClassLoader()
                     .getResourceAsStream("config.properties");
+            if (Input == null) {
+                System.err.println("Error: No se encontró config.properties en el classpath");
+                return;
+            }
             prop.load(Input);
             
             String driver = prop.getProperty("db.driver");
@@ -35,12 +39,23 @@ public class ConexionBD {
             System.out.println("Conexion exitosa");
         }catch (Exception ex){
             System.err.println("Error al conectar: " + ex.getMessage());
+            conexion = null;
+        }
+    }
+    
+    public static boolean isConectado() {
+        try {
+            return conexion != null && !conexion.isClosed();
+        } catch (Exception ex) {
+            return false;
         }
     }
     
     public static void desconectar(){
         try{
-            conexion.close();
+            if (conexion != null && !conexion.isClosed()) {
+                conexion.close();
+            }
         } catch (Exception ex){
             System.err.println("Error al desconectar: " + ex.getMessage());
         }

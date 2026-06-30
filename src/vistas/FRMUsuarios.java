@@ -5,11 +5,16 @@
 package vistas;
 
 import java.awt.Color;
+import modelo.Usuario;
+import java.util.Iterator;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author lemag
  */
 public class FRMUsuarios extends javax.swing.JInternalFrame {
+
+    private javax.swing.JDesktopPane escritorio;
 
     /**
      * Creates new form FRMUsuarios
@@ -18,7 +23,78 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
         initComponents();
         txt_busqueda.setText("Buscar por nombre, email o rol...");
         txt_busqueda.setForeground(Color.GRAY);
-        
+        txt_busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                String texto = txt_busqueda.getText().trim();
+                if (texto.isEmpty() || texto.equals("Buscar por nombre, email o rol...")) {
+                    cargarUsuarios();
+                } else {
+                    buscarUsuarios(texto);
+                }
+            }
+        });
+        cargarUsuarios();
+        addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                javax.swing.JDesktopPane dp = escritorio;
+                if (dp == null) return;
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMLogin) return;
+                }
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMMenu) {
+                        f.setVisible(true);
+                        return;
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        escritorio = getDesktopPane();
+    }
+
+    public void cargarUsuarios() {
+        DefaultTableModel modelo = (DefaultTableModel) tb_Usuarios.getModel();
+        modelo.setRowCount(0);
+
+        Usuario u = new Usuario();
+        Iterator<Usuario> lista = u.listar();
+
+        while (lista.hasNext()) {
+            Usuario usr = lista.next();
+            modelo.addRow(new Object[]{
+                usr.getIdUsuario(),
+                usr.getNombre(),
+                usr.getEmail(),
+                "", // rol (pendiente implementar relacion)
+                usr.isActivo() ? "Activo" : "Inactivo",
+                usr.isAprovado() ? "Si" : "No"
+            });
+        }
+    }
+
+    private void buscarUsuarios(String busqueda) {
+        DefaultTableModel modelo = (DefaultTableModel) tb_Usuarios.getModel();
+        modelo.setRowCount(0);
+
+        Usuario u = new Usuario();
+        Iterator<Usuario> lista = u.buscar(busqueda);
+
+        while (lista.hasNext()) {
+            Usuario usr = lista.next();
+            modelo.addRow(new Object[]{
+                usr.getIdUsuario(),
+                usr.getNombre(),
+                usr.getEmail(),
+                "",
+                usr.isActivo() ? "Activo" : "Inactivo",
+                usr.isAprovado() ? "Si" : "No"
+            });
+        }
     }
 
     /**
@@ -34,17 +110,18 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         bt_Cerrar_sesion = new javax.swing.JButton();
+        bt_volver = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txt_busqueda = new javax.swing.JTextField();
         bt_Agregar_usuario = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tb_Usuarios = new javax.swing.JTable();
         bt_editar = new javax.swing.JButton();
         bt_eliminar = new javax.swing.JButton();
 
-        setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -53,31 +130,43 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
         jLabel2.setText("Usuario: admin");
 
         bt_Cerrar_sesion.setText("Cerrar sesión ");
+        bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
+
+        bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_volver.setText("<-");
+        bt_volver.addActionListener(this::bt_volverActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(291, 291, 291))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(244, 244, 244)
-                .addComponent(bt_Cerrar_sesion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(340, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(291, 291, 291))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(bt_Cerrar_sesion)
+                        .addGap(278, 278, 278))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bt_Cerrar_sesion)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
@@ -94,8 +183,9 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
         });
 
         bt_Agregar_usuario.setText("+ Agregar Usuario");
+        bt_Agregar_usuario.addActionListener(this::bt_Agregar_usuarioActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_Usuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -114,7 +204,7 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tb_Usuarios);
 
         bt_editar.setText("Editar");
 
@@ -128,16 +218,18 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 97, Short.MAX_VALUE)
                         .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(bt_Agregar_usuario))
+                        .addGap(183, 183, 183)
+                        .addComponent(bt_Agregar_usuario)
+                        .addGap(41, 41, 41))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bt_editar)
-                            .addComponent(bt_eliminar))))
-                .addContainerGap(50, Short.MAX_VALUE))
+                            .addComponent(bt_eliminar))
+                        .addGap(37, 37, 37))))
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -146,18 +238,19 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bt_Agregar_usuario)
-                    .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_Agregar_usuario))
+                .addGap(1, 1, 1)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addGap(28, 28, 28)
                         .addComponent(bt_editar)
-                        .addGap(39, 39, 39)
+                        .addGap(18, 18, 18)
                         .addComponent(bt_eliminar)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -193,19 +286,55 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_busquedaFocusLost
 
+    private void bt_Cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Cerrar_sesionActionPerformed
+        int opcion = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Desea cerrar sesión?",
+            "Cerrar sesión",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+        if (opcion == javax.swing.JOptionPane.YES_OPTION) {
+            FRMLogin login = new FRMLogin();
+            this.getDesktopPane().add(login);
+            login.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_bt_Cerrar_sesionActionPerformed
 
+    private void bt_Agregar_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Agregar_usuarioActionPerformed
+        FRMRegistrarse registro = new FRMRegistrarse(false);
+        this.getDesktopPane().add(registro);
+        registro.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_Agregar_usuarioActionPerformed
+
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
+        javax.swing.JDesktopPane dp = getDesktopPane();
+        if (dp == null) return;
+        for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+            if (f instanceof FRMMenu) {
+                f.setVisible(true);
+                break;
+            }
+        }
+        this.dispose();
+    
+    }//GEN-LAST:event_bt_volverActionPerformed
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_Agregar_usuario;
     private javax.swing.JButton bt_Cerrar_sesion;
     private javax.swing.JButton bt_editar;
     private javax.swing.JButton bt_eliminar;
+    private javax.swing.JButton bt_volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tb_Usuarios;
     private javax.swing.JTextField txt_busqueda;
     // End of variables declaration//GEN-END:variables
 }

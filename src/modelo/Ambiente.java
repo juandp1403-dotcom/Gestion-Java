@@ -67,6 +67,26 @@ public class Ambiente {
         return this.idAmbiente == ((Ambiente) o).idAmbiente;
     }
 
+    public Ambiente buscarPorId(int id) {
+        Ambiente a = null;
+        try {
+            var sql = ConexionBD.conexion.prepareStatement("SELECT * FROM ambiente WHERE id = ?");
+            sql.setInt(1, id);
+            var rs = sql.executeQuery();
+            if (rs.next()) {
+                a = new Ambiente();
+                a.setIdAmbiente(rs.getInt("id"));
+                a.setNombre(rs.getString("nombre"));
+                a.setTipo(rs.getString("tipo"));
+                a.setUbicacion(rs.getString("ubicacion"));
+                a.setDescripcion(rs.getString("descripcion"));
+            }
+        } catch (Exception ex) {
+            System.err.println("Error al buscar ambiente: " + ex.getMessage());
+        }
+        return a;
+    }
+
     public Iterator<Ambiente> listar() {
         ArrayList<Ambiente> lista = new ArrayList<>();
         try {

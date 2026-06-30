@@ -5,6 +5,7 @@
 package vistas;
 
 import java.awt.Color;
+import modelo.Solicitud;
 
 /**
  *
@@ -12,13 +13,54 @@ import java.awt.Color;
  */
 public class FRMSolicitudes extends javax.swing.JInternalFrame {
 
+    private javax.swing.JDesktopPane escritorio;
+
     /**
      * Creates new form FRMSolicitudes
      */
     public FRMSolicitudes() {
         initComponents();
-        txt_busqueda_inv.setText("Buscar por nombre, email o rol...");
-        txt_busqueda_inv.setForeground(Color.GRAY);
+        addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                javax.swing.JDesktopPane dp = escritorio;
+                if (dp == null) return;
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMLogin) return;
+                }
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMMenu) {
+                        f.setVisible(true);
+                        return;
+                    }
+                }
+            }
+        });
+        cargarSolicitudes();
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        escritorio = getDesktopPane();
+    }
+
+    public void cargarSolicitudes() {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tb_Solicitudes.getModel();
+        modelo.setRowCount(0);
+
+        Solicitud s = new Solicitud();
+        java.util.Iterator<Solicitud> lista = s.listar();
+
+        while (lista.hasNext()) {
+            Solicitud sol = lista.next();
+            modelo.addRow(new Object[]{
+                sol.getId(),
+                sol.getNombreAmbiente(),
+                sol.getEstado(),
+                sol.getJustificacion(),
+                sol.getFechaSolicitud() != null ? sol.getFechaSolicitud().toString() : ""
+            });
+        }
     }
 
     /**
@@ -30,14 +72,22 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        bt_cerrar_sesion = new javax.swing.JButton();
+        bt_Cerrar_sesion = new javax.swing.JButton();
+        bt_volver = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txt_busqueda_inv = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tb_Solicitudes = new javax.swing.JTable();
+
+        jTextField1.setText("jTextField1");
+
+        setIconifiable(true);
+        setMaximizable(true);
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -45,70 +95,87 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Usuario: admin");
 
-        bt_cerrar_sesion.setText("Cerrar sesión ");
+        bt_Cerrar_sesion.setText("Cerrar sesión ");
+        bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
+
+        bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_volver.setText("<-");
+        bt_volver.addActionListener(this::bt_volverActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(212, 212, 212))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(212, 212, 212))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(bt_cerrar_sesion))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(236, 236, 236))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bt_Cerrar_sesion)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(289, 289, 289))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bt_cerrar_sesion)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(bt_Cerrar_sesion)
+                .addContainerGap())
         );
 
         jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Inventario general");
+        jLabel3.setText("Solicitudes");
 
-        jLabel4.setText("Selecciona un ambiente para ver su inventario ");
+        jLabel4.setText("Consulta las solicitudes de inventario.");
 
-        txt_busqueda_inv.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txt_busqueda_invFocusGained(evt);
+        tb_Solicitudes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Numero", "Ambiente", "Estado", "descripción", "Fecha"
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_busqueda_invFocusLost(evt);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane1.setViewportView(tb_Solicitudes);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(97, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 135, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(226, 226, 226))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(271, 271, 271))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(txt_busqueda_inv, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(271, 271, 271))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(226, 226, 226))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,19 +185,16 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_busqueda_inv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,29 +207,45 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_busqueda_invFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_busqueda_invFocusGained
-        if (txt_busqueda_inv.getText().equals("Buscar por nombre, email o rol...")) {
-           txt_busqueda_inv.setText("");
-           txt_busqueda_inv.setForeground(Color.BLACK);
+    private void bt_Cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Cerrar_sesionActionPerformed
+        int opcion = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Desea cerrar sesión?",
+            "Cerrar sesión",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+        if (opcion == javax.swing.JOptionPane.YES_OPTION) {
+            FRMLogin login = new FRMLogin();
+            this.getDesktopPane().add(login);
+            login.setVisible(true);
+            this.dispose();
         }
-    }//GEN-LAST:event_txt_busqueda_invFocusGained
+    }//GEN-LAST:event_bt_Cerrar_sesionActionPerformed
 
-    private void txt_busqueda_invFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_busqueda_invFocusLost
-        if (txt_busqueda_inv.getText().trim().isEmpty()) {
-           txt_busqueda_inv.setText("Buscar por nombre, email o rol...");
-           txt_busqueda_inv.setForeground(Color.GRAY);
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
+        javax.swing.JDesktopPane dp = getDesktopPane();
+        if (dp == null) return;
+        for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+            if (f instanceof FRMMenu) {
+                f.setVisible(true);
+                break;
+            }
         }
-    }//GEN-LAST:event_txt_busqueda_invFocusLost
+        this.dispose();
+    }//GEN-LAST:event_bt_volverActionPerformed
 
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bt_cerrar_sesion;
+    private javax.swing.JButton bt_Cerrar_sesion;
+    private javax.swing.JButton bt_volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txt_busqueda_inv;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tb_Solicitudes;
     // End of variables declaration//GEN-END:variables
 }

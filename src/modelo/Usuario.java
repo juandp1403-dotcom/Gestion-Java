@@ -21,6 +21,7 @@ public class Usuario {
     private Timestamp creadoEn;
     private boolean aprovado;
     private boolean activo;
+    private int idRol;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -78,6 +79,14 @@ public class Usuario {
         this.activo = activo;
     }
 
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
+    }
+
     @Override
     public String toString() {
         return nombre;
@@ -125,13 +134,14 @@ public class Usuario {
     //Insertar
     public void insertar(){
         try{
-            var sql = ConexionBD.conexion.prepareStatement("INSERT INTO usuario (nombre, email, password, id_rol, aprobado, activo) VALUES (?, ?, ?, 1, ?, ?");
+            var sql = ConexionBD.conexion.prepareStatement("INSERT INTO usuario (nombre, email, password, id_rol, aprobado, activo) VALUES (?, ?, ?, ?, ?, ?)");
             
             sql.setString(1, this.nombre);
             sql.setString(2, this.email);
             sql.setString(3, this.password);
-            sql.setBoolean(4, this.aprovado);
-            sql.setBoolean(5, this.activo);
+            sql.setInt(4, this.idRol);
+            sql.setBoolean(5, this.aprovado);
+            sql.setBoolean(6, this.activo);
             sql.executeUpdate();
             System.out.println("Usuario insertado correctamente");
         } catch (Exception ex) {
@@ -142,7 +152,7 @@ public class Usuario {
     //Modificar
     public void modificar(){
         try{
-            var sql = ConexionBD.conexion.prepareStatement("UPDATE usuario SET nombre=? email=? aprobado=? activo=? WHERE id=?");
+            var sql = ConexionBD.conexion.prepareStatement("UPDATE usuario SET nombre=?, email=?, password=?, aprobado=?, activo=? WHERE id=?");
             
             sql.setString(1, this.nombre);
             sql.setString(2, this.email);

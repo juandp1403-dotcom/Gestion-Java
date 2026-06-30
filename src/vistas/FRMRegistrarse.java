@@ -5,6 +5,8 @@
 package vistas;
 
 import javax.swing.JOptionPane;
+import modelo.Usuario;
+import java.util.Map;
 
 /**
  *
@@ -12,11 +14,20 @@ import javax.swing.JOptionPane;
  */
 public class FRMRegistrarse extends javax.swing.JInternalFrame {
 
+    private boolean fromLogin;
+
     /**
      * Creates new form FRMRegistrarse
      */
-    public FRMRegistrarse() {
+    public FRMRegistrarse(boolean fromLogin) {
+        this.fromLogin = fromLogin;
         initComponents();
+        if (fromLogin) {
+            cbx_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
+                "Selecciona un rol", "Aprendiz"
+            }));
+        }
+        bt_Cerrar_sesion.setEnabled(!fromLogin);
         limpiarCampos();
     }
     
@@ -51,9 +62,14 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
         bt_crearusuario = new javax.swing.JButton();
         txt_correo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        bt_Cerrar_sesion = new javax.swing.JButton();
+        bt_volver = new javax.swing.JButton();
 
-        setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -127,7 +143,7 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
                 .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
@@ -148,17 +164,64 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jLabel7.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Sistema de Gestión de Inventarios");
+
+        jLabel8.setText("Usuario: admin");
+
+        bt_Cerrar_sesion.setText("Cerrar sesión");
+        bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
+
+        bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_volver.setText("<-");
+        bt_volver.addActionListener(this::bt_volverActionPerformed);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(263, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bt_Cerrar_sesion)
+                    .addComponent(jLabel8))
+                .addGap(269, 269, 269))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bt_Cerrar_sesion)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -185,7 +248,7 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
                 "Debe ingresar un correo electronico",
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
-        
+        return;
     }
 
    
@@ -201,9 +264,24 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
         return;
     }
 
-    try {
+    if (cbx_rol.getSelectedIndex() == 0) {
+        JOptionPane.showMessageDialog(this,
+                "Debe seleccionar un rol",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        
+    try {
+        Usuario u = new Usuario();
+        u.setNombre(nombre);
+        u.setEmail(correo);
+        u.setPassword(contraseña);
+        u.setIdRol(cbx_rol.getSelectedIndex());
+        u.setAprovado(false);
+        u.setActivo(true);
+        u.insertar();
+
         JOptionPane.showMessageDialog(this,
                 "Usuario creado correctamente");
 
@@ -222,10 +300,41 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
         limpiarCampos();
     }//GEN-LAST:event_bt_cancelarActionPerformed
 
+    private void bt_Cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Cerrar_sesionActionPerformed
+        int opcion = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Desea cerrar sesión?",
+            "Cerrar sesión",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+        if (opcion == javax.swing.JOptionPane.YES_OPTION) {
+            FRMLogin login = new FRMLogin();
+            this.getDesktopPane().add(login);
+            login.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_bt_Cerrar_sesionActionPerformed
+
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
+        javax.swing.JDesktopPane dp = getDesktopPane();
+        if (dp == null) return;
+        Class<?> targetClass = fromLogin ? FRMLogin.class : FRMUsuarios.class;
+        for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+            if (f.getClass().equals(targetClass)) {
+                f.setVisible(true);
+                break;
+            }
+        }
+        this.dispose();
+    }//GEN-LAST:event_bt_volverActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_Cerrar_sesion;
     private javax.swing.JButton bt_cancelar;
     private javax.swing.JButton bt_crearusuario;
+    private javax.swing.JButton bt_volver;
     private javax.swing.JComboBox<String> cbx_rol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -233,7 +342,10 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField pf_contraseña;
     private javax.swing.JPasswordField ps_confi_contraseña;
     private javax.swing.JTextField txt_correo;

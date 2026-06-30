@@ -4,17 +4,116 @@
  */
 package vistas;
 
+import java.awt.Color;
+import modelo.Ambiente;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+
 /**
  *
  * @author lemag
  */
 public class FRMInventario extends javax.swing.JInternalFrame {
 
+    private javax.swing.JDesktopPane escritorio;
+
     /**
      * Creates new form FRMInventario
      */
     public FRMInventario() {
         initComponents();
+        panelTarjetas.setLayout(new java.awt.FlowLayout(
+            java.awt.FlowLayout.LEFT,15,15));
+        
+        txt_buscar_ambiente.setText("Buscar por nombre...");
+        txt_buscar_ambiente.setForeground(Color.GRAY);
+        
+        cargarAmbientes();
+        addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                javax.swing.JDesktopPane dp = escritorio;
+                if (dp == null) return;
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMLogin) return;
+                }
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMMenu) {
+                        f.setVisible(true);
+                        return;
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        escritorio = getDesktopPane();
+    }
+    
+    public void agregarInventario(Ambiente amb) {
+        JPanel tarjeta = crearTarjeta(amb);
+        panelTarjetas.add(tarjeta);
+        panelTarjetas.revalidate();
+        panelTarjetas.repaint();
+    }
+
+    private JPanel crearTarjeta(Ambiente amb) {
+        JPanel tarjeta = new JPanel();
+        tarjeta.setPreferredSize(new Dimension(250, 140));
+        tarjeta.setBackground(Color.WHITE);
+        tarjeta.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
+
+        JLabel lblNombre = new JLabel(amb.getNombre(), SwingConstants.CENTER);
+        lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblNombre.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+
+        JLabel lblTipo = new JLabel(amb.getTipo(), SwingConstants.CENTER);
+        lblTipo.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+
+        JButton btnVer = new JButton("Ver inventario");
+        btnVer.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        btnVer.addActionListener(e -> {
+            FRMDetalleInventario detalle = new FRMDetalleInventario();
+            detalle.cargarInformacionInventario(amb.getIdAmbiente());
+            getDesktopPane().add(detalle);
+            detalle.setVisible(true);
+            setVisible(false);
+        });
+
+        tarjeta.add(javax.swing.Box.createVerticalGlue());
+        tarjeta.add(lblNombre);
+        tarjeta.add(javax.swing.Box.createVerticalStrut(10));
+        tarjeta.add(lblTipo);
+        tarjeta.add(javax.swing.Box.createVerticalStrut(10));
+        tarjeta.add(btnVer);
+        tarjeta.add(javax.swing.Box.createVerticalGlue());
+
+        return tarjeta;
+    }
+
+    public void cargarAmbientes() {
+        panelTarjetas.removeAll();
+
+        Ambiente a = new Ambiente();
+        var lista = a.listar();
+
+        while (lista.hasNext()) {
+            Ambiente amb = lista.next();
+            agregarInventario(amb);
+        }
+
+        panelTarjetas.revalidate();
+        panelTarjetas.repaint();
     }
 
     /**
@@ -26,21 +125,192 @@ public class FRMInventario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        bt_Cerrar_sesion = new javax.swing.JButton();
+        bt_volver = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt_buscar_ambiente = new javax.swing.JTextField();
+        bt_añadir_amb = new javax.swing.JButton();
+        panelTarjetas = new javax.swing.JPanel();
+
+        setIconifiable(true);
+        setMaximizable(true);
+
+        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Sistema de Gestion de Inventarios");
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Usuario: admin ");
+
+        bt_Cerrar_sesion.setText("Cerrar sesión");
+        bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
+
+        bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bt_volver.setText("<-");
+        bt_volver.addActionListener(this::bt_volverActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(263, 263, 263)
+                        .addComponent(bt_Cerrar_sesion)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_Cerrar_sesion)
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+
+        jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Inventario general");
+
+        jLabel4.setText("Selecciona un ambiente para ver su inventario ");
+
+        bt_añadir_amb.setText("Añadir Ambiente");
+        bt_añadir_amb.addActionListener(this::bt_añadir_ambActionPerformed);
+
+        javax.swing.GroupLayout panelTarjetasLayout = new javax.swing.GroupLayout(panelTarjetas);
+        panelTarjetas.setLayout(panelTarjetasLayout);
+        panelTarjetasLayout.setHorizontalGroup(
+            panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 588, Short.MAX_VALUE)
+        );
+        panelTarjetasLayout.setVerticalGroup(
+            panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 223, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelTarjetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(txt_buscar_ambiente, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(bt_añadir_amb, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 9, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_buscar_ambiente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_añadir_amb))
+                .addGap(18, 18, 18)
+                .addComponent(panelTarjetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bt_añadir_ambActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_añadir_ambActionPerformed
+        FRMNuevoAmbiente nuevoAmb = new FRMNuevoAmbiente(this);
+
+        this.getDesktopPane().add(nuevoAmb);
+        nuevoAmb.setVisible(true);
+
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_añadir_ambActionPerformed
+
+    private void bt_Cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Cerrar_sesionActionPerformed
+        int opcion = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Desea cerrar sesión?",
+            "Cerrar sesión",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+        if (opcion == javax.swing.JOptionPane.YES_OPTION) {
+            FRMLogin login = new FRMLogin();
+            this.getDesktopPane().add(login);
+            login.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_bt_Cerrar_sesionActionPerformed
+
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
+        javax.swing.JDesktopPane dp = getDesktopPane();
+        if (dp == null) return;
+        for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+            if (f instanceof FRMMenu) {
+                f.setVisible(true);
+                break;
+            }
+        }
+        this.dispose();
+    }//GEN-LAST:event_bt_volverActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_Cerrar_sesion;
+    private javax.swing.JButton bt_añadir_amb;
+    private javax.swing.JButton bt_volver;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel panelTarjetas;
+    private javax.swing.JTextField txt_buscar_ambiente;
     // End of variables declaration//GEN-END:variables
 }

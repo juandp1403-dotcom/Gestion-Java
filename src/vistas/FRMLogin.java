@@ -48,8 +48,8 @@ public class FRMLogin extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         bt_registro = new javax.swing.JButton();
 
-        setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -179,7 +179,7 @@ public class FRMLogin extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_registroActionPerformed
-        FRMRegistrarse registro = new FRMRegistrarse();
+        FRMRegistrarse registro = new FRMRegistrarse(true);
 
         this.getDesktopPane().add(registro);
         registro.setVisible(true);
@@ -197,8 +197,8 @@ public class FRMLogin extends javax.swing.JInternalFrame {
        contraseña.equals("postgres123")){
 
         FRMMenu menu = new FRMMenu();
-        menu.setVisible(true);
         this.getDesktopPane().add(menu);
+        menu.setVisible(true);
         this.dispose();
 
     }else{

@@ -31,7 +31,7 @@ public class FRMMenu extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        bt_cerrar_sesion = new javax.swing.JButton();
+        bt_Cerrar_sesion = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -57,7 +57,7 @@ public class FRMMenu extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         bt_inventario = new javax.swing.JButton();
 
-        setClosable(true);
+        setIconifiable(true);
 
         jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -66,8 +66,8 @@ public class FRMMenu extends javax.swing.JInternalFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Usuario: admin");
 
-        bt_cerrar_sesion.setText("Cerrar sesión");
-        bt_cerrar_sesion.addActionListener(this::bt_cerrar_sesionActionPerformed);
+        bt_Cerrar_sesion.setText("Cerrar sesión");
+        bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Panel de control");
@@ -93,7 +93,7 @@ public class FRMMenu extends javax.swing.JInternalFrame {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(576, 576, 576)
-                .addComponent(bt_cerrar_sesion)
+                .addComponent(bt_Cerrar_sesion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,7 +104,7 @@ public class FRMMenu extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bt_cerrar_sesion)
+                .addComponent(bt_Cerrar_sesion)
                 .addGap(11, 11, 11)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -400,15 +400,15 @@ public class FRMMenu extends javax.swing.JInternalFrame {
         this.setVisible(false);
     }//GEN-LAST:event_bt_alertasActionPerformed
 
-    private void bt_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cerrar_sesionActionPerformed
-         int opcion = JOptionPane.showConfirmDialog(
+    private void bt_Cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Cerrar_sesionActionPerformed
+        int opcion = JOptionPane.showConfirmDialog(
             this,
             "¿Desea cerrar sesión?",
             "Cerrar sesión",
             JOptionPane.YES_NO_OPTION
     );
 
-    if (opcion == JOptionPane.YES_OPTION) {
+        if (opcion == JOptionPane.YES_OPTION) {
         FRMLogin login = new FRMLogin();
         this.getDesktopPane().add(login);
         login.setVisible(true);
@@ -416,14 +416,14 @@ public class FRMMenu extends javax.swing.JInternalFrame {
         this.dispose();
     }
 
-    }//GEN-LAST:event_bt_cerrar_sesionActionPerformed
+    }//GEN-LAST:event_bt_Cerrar_sesionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_Cerrar_sesion;
     private javax.swing.JButton bt_Solicitudes;
     private javax.swing.JButton bt_Usuarios;
     private javax.swing.JButton bt_alertas;
-    private javax.swing.JButton bt_cerrar_sesion;
     private javax.swing.JButton bt_inventario;
     private javax.swing.JButton bt_reportes;
     private javax.swing.JLabel jLabel1;

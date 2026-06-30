@@ -20,6 +20,14 @@ public class MDI_inventario extends javax.swing.JFrame {
     public MDI_inventario() {
         modelo.ConexionBD.getInstance();
         initComponents();
+        if (!modelo.ConexionBD.isConectado()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "No se pudo conectar a la base de datos.\nVerifique la conexión e intente de nuevo.",
+                "Error de conexión",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
         fLogin = new FRMLogin();
         escritorio.add(fLogin);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,8 +45,6 @@ public class MDI_inventario extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        itemRegistrarse = new javax.swing.JMenuItem();
         itemLogin = new javax.swing.JMenuItem();
         itemSalir = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
@@ -54,14 +60,6 @@ public class MDI_inventario extends javax.swing.JFrame {
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Administrar");
-
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
-
-        itemRegistrarse.setMnemonic('s');
-        itemRegistrarse.setText("Registrarse");
-        fileMenu.add(itemRegistrarse);
 
         itemLogin.setMnemonic('a');
         itemLogin.setText("Login ");
@@ -131,6 +129,10 @@ public class MDI_inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_itemSalirActionPerformed
 
     private void itemLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLoginActionPerformed
+        if (fLogin.isClosed()) {
+            fLogin = new FRMLogin();
+            escritorio.add(fLogin);
+        }
         fLogin.setVisible(true);
     }//GEN-LAST:event_itemLoginActionPerformed
 
@@ -180,10 +182,8 @@ public class MDI_inventario extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem itemLogin;
-    private javax.swing.JMenuItem itemRegistrarse;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     // End of variables declaration//GEN-END:variables
 
