@@ -22,6 +22,22 @@ public class DGReporte extends javax.swing.JDialog {
         initComponents();
         tat_Reporte.setText("Describe lo necesario...");
         tat_Reporte.setForeground(Color.GRAY);
+        tat_Reporte.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (tat_Reporte.getText().equals("Describe lo necesario...")) {
+                    tat_Reporte.setText("");
+                    tat_Reporte.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (tat_Reporte.getText().isEmpty()) {
+                    tat_Reporte.setText("Describe lo necesario...");
+                    tat_Reporte.setForeground(Color.GRAY);
+                }
+            }
+        });
     }
 
     /**

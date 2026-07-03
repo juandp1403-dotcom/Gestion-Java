@@ -11,23 +11,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import modelo.Articulo;
+import modelo.InventarioAmbiente;
 /**
  *
  * @author lemag
  */
 public class FRMEditarInventario extends javax.swing.JInternalFrame {
 
+    private int idAmbiente;
+
     /**
      * Creates new form FRMEditarInventario
      */
     public FRMEditarInventario() {
         initComponents();
+        panelArticulos.setLayout(new javax.swing.BoxLayout(panelArticulos, javax.swing.BoxLayout.Y_AXIS));
     }
      public void cargarInformacionInventario(int idAmbiente) {
+        this.idAmbiente = idAmbiente;
 
     try {
         PreparedStatement ps = conexion.prepareStatement(
@@ -39,12 +46,74 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
 
         if (rs.next()) {
             lb_NumAmbiente.setText(rs.getString("nombre"));
-            
         }
-
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, e.getMessage());
     }
+
+    cargarItemsInventario();
+    }
+
+    private void cargarItemsInventario() {
+        panelArticulos.removeAll();
+
+        InventarioAmbiente ia = new InventarioAmbiente();
+        java.util.Iterator<InventarioAmbiente> lista = ia.listarPorAmbiente(idAmbiente);
+
+        while (lista.hasNext()) {
+            InventarioAmbiente item = lista.next();
+            if ("Sin registros".equals(item.getNombreArticulo())) continue;
+            agregarFila(item);
+        }
+
+        panelArticulos.revalidate();
+        panelArticulos.repaint();
+    }
+
+    private void agregarFila(InventarioAmbiente item) {
+        JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        JLabel lblNombre = new JLabel("Artículo:");
+        JComboBox<Articulo> cbxArticulo = new JComboBox<>();
+        java.util.Iterator<Articulo> articulos = new Articulo().listar();
+        while (articulos.hasNext()) {
+            Articulo art = articulos.next();
+            if (!"Sin registros".equals(art.getNombre())) {
+                cbxArticulo.addItem(art);
+            }
+        }
+        if (item != null) {
+            for (int i = 0; i < cbxArticulo.getItemCount(); i++) {
+                if (cbxArticulo.getItemAt(i).getIdArticulo() == item.getIdArticulo()) {
+                    cbxArticulo.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+
+        JLabel lblCant = new JLabel("Cantidad:");
+        JTextField txtCantidad = new JTextField(item != null ? String.valueOf(item.getCantidad()) : "", 5);
+
+        JLabel lblMin = new JLabel("Mín:");
+        JTextField txtMinimo = new JTextField(item != null ? String.valueOf(item.getCantidadMinima()) : "", 5);
+
+        JButton btnEliminar = new JButton("X");
+
+    btnEliminar.addActionListener(e -> {
+        panelArticulos.remove(fila);
+        panelArticulos.revalidate();
+        panelArticulos.repaint();
+    });
+
+    fila.add(lblNombre);
+    fila.add(cbxArticulo);
+    fila.add(lblCant);
+    fila.add(txtCantidad);
+    fila.add(lblMin);
+    fila.add(txtMinimo);
+    fila.add(btnEliminar);
+
+    panelArticulos.add(fila);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,10 +124,6 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        bt_Cerrar_sesion = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         lb_NumAmbiente = new javax.swing.JLabel();
@@ -71,45 +136,12 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
         panelArticulos = new javax.swing.JPanel();
         bt_GuardarInventario = new javax.swing.JButton();
         bt_cancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        bt_Cerrar_sesion = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Sistema de Gestión de Inventarios");
-
-        jLabel2.setText("Usuario: Admin");
-
-        bt_Cerrar_sesion.setText("Cerrar seión");
-        bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(367, 367, 367)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(bt_Cerrar_sesion))
-                            .addComponent(jLabel2))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bt_Cerrar_sesion)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
+        setMaximizable(true);
 
         jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel3.setText("Editar inventario");
@@ -137,13 +169,51 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
         );
         panelArticulosLayout.setVerticalGroup(
             panelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 64, Short.MAX_VALUE)
+            .addGap(0, 22, Short.MAX_VALUE)
         );
 
         bt_GuardarInventario.setText("Guardar Inventario ");
+        bt_GuardarInventario.addActionListener(this::bt_GuardarInventarioActionPerformed);
 
         bt_cancelar.setText("Cancelar");
         bt_cancelar.addActionListener(this::bt_cancelarActionPerformed);
+
+        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Sistema de Gestión de Inventarios");
+
+        jLabel2.setText("Usuario: Admin");
+
+        bt_Cerrar_sesion.setText("Cerrar seión");
+        bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(242, 242, 242)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bt_Cerrar_sesion)
+                            .addComponent(jLabel2))))
+                .addContainerGap(107, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_Cerrar_sesion)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -152,36 +222,42 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(41, 41, 41)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel4)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lb_NumAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(panelArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lb_NumAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(panelArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(193, 193, 193)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bt_GuardarInventario)
-                            .addComponent(bt_añadirArticulo)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(bt_cancelar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(193, 193, 193)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(bt_GuardarInventario)
+                                    .addComponent(bt_añadirArticulo)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(220, 220, 220)
+                                .addComponent(bt_cancelar)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lb_NumAmbiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -193,9 +269,9 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(panelArticulos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_añadirArticulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_GuardarInventario)
@@ -209,16 +285,13 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -227,49 +300,25 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_añadirArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_añadirArticuloActionPerformed
-        JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
-        JLabel lblNombre = new JLabel("Artículo:");
-        JTextField txtNombre = new JTextField(10);
-
-        JLabel lblCant = new JLabel("Cantidad:");
-        JTextField txtCantidad = new JTextField(5);
-
-        JLabel lblMin = new JLabel("Mín:");
-        JTextField txtMinimo = new JTextField(5);
-
-        JButton btnEliminar = new JButton("X");
-
-    btnEliminar.addActionListener(e -> {
-        panelArticulos.remove(fila);
+        agregarFila(null);
         panelArticulos.revalidate();
         panelArticulos.repaint();
-    });
-
-    fila.add(lblNombre);
-    fila.add(txtNombre);
-    fila.add(lblCant);
-    fila.add(txtCantidad);
-    fila.add(lblMin);
-    fila.add(txtMinimo);
-    fila.add(btnEliminar);
-
-    panelArticulos.add(fila);
-
-    panelArticulos.revalidate();
-    panelArticulos.repaint();
     }//GEN-LAST:event_bt_añadirArticuloActionPerformed
 
     private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
-        limpiarFormulario();
+        javax.swing.JDesktopPane dp = getDesktopPane();
+        if (dp != null) {
+            for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                if (f instanceof FRMDetalleInventario) {
+                    f.setVisible(true);
+                    break;
+                }
+            }
+        }
+        this.dispose();
     }//GEN-LAST:event_bt_cancelarActionPerformed
 
-    private void limpiarFormulario() {
-        panelArticulos.removeAll();
-        panelArticulos.revalidate();
-        panelArticulos.repaint();
-    }
-
+    
     private void bt_Cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Cerrar_sesionActionPerformed
         int opcion = javax.swing.JOptionPane.showConfirmDialog(
             this,
@@ -278,12 +327,63 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
             javax.swing.JOptionPane.YES_NO_OPTION
         );
         if (opcion == javax.swing.JOptionPane.YES_OPTION) {
-            FRMLogin login = new FRMLogin();
-            this.getDesktopPane().add(login);
+            javax.swing.JDesktopPane dp = getDesktopPane();
+            FRMLogin login = null;
+            if (dp != null) {
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMLogin) {
+                        login = (FRMLogin) f;
+                        break;
+                    }
+                }
+            }
+            if (login == null) {
+                login = new FRMLogin();
+                if (dp != null) dp.add(login);
+            }
             login.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_bt_Cerrar_sesionActionPerformed
+
+    private void bt_GuardarInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_GuardarInventarioActionPerformed
+        InventarioAmbiente ia = new InventarioAmbiente();
+        ia.eliminarPorAmbiente(idAmbiente);
+
+        for (java.awt.Component comp : panelArticulos.getComponents()) {
+            if (comp instanceof JPanel) {
+                JPanel fila = (JPanel) comp;
+                JComboBox<Articulo> cbx = null;
+                JTextField txtCant = null, txtMin = null;
+                for (java.awt.Component c : fila.getComponents()) {
+                    if (c instanceof JComboBox) {
+                        cbx = (JComboBox<Articulo>) c;
+                    } else if (c instanceof JTextField) {
+                        if (txtCant == null) txtCant = (JTextField) c;
+                        else txtMin = (JTextField) c;
+                    }
+                }
+                if (cbx != null && cbx.getSelectedItem() != null && txtCant != null) {
+                    Articulo art = (Articulo) cbx.getSelectedItem();
+                    try {
+                        int cantidad = Integer.parseInt(txtCant.getText().trim());
+                        int cantidadMinima = (txtMin != null && !txtMin.getText().trim().isEmpty())
+                            ? Integer.parseInt(txtMin.getText().trim()) : 0;
+                        InventarioAmbiente inv = new InventarioAmbiente();
+                        inv.setIdAmbiente(idAmbiente);
+                        inv.setIdArticulo(art.getIdArticulo());
+                        inv.setCantidad(cantidad);
+                        inv.setCantidadMinima(cantidadMinima);
+                        inv.insertar();
+                    } catch (NumberFormatException e) {
+                        
+                    }
+                }
+            }
+        }
+
+        JOptionPane.showMessageDialog(this, "Inventario guardado correctamente");
+    }//GEN-LAST:event_bt_GuardarInventarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

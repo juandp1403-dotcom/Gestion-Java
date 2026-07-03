@@ -195,6 +195,7 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
         lb_titulo.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
 
         bt_checklist.setText("Iniciar Checklist");
+        bt_checklist.addActionListener(this::bt_checklistActionPerformed);
 
         bt_NuevaSolicitud.setText("Nueva Solicitud");
         bt_NuevaSolicitud.addActionListener(this::bt_NuevaSolicitudActionPerformed);
@@ -327,8 +328,20 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
             javax.swing.JOptionPane.YES_NO_OPTION
         );
         if (opcion == javax.swing.JOptionPane.YES_OPTION) {
-            FRMLogin login = new FRMLogin();
-            this.getDesktopPane().add(login);
+            javax.swing.JDesktopPane dp = getDesktopPane();
+            FRMLogin login = null;
+            if (dp != null) {
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMLogin) {
+                        login = (FRMLogin) f;
+                        break;
+                    }
+                }
+            }
+            if (login == null) {
+                login = new FRMLogin();
+                if (dp != null) dp.add(login);
+            }
             login.setVisible(true);
             this.dispose();
         }
@@ -336,10 +349,11 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
 
     private void bt_historial_InventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_historial_InventarioActionPerformed
         FRMHistorialRevisiones historial = new FRMHistorialRevisiones();
+        historial.cargarInformacionInventario(idAmbiente);
 
         this.getDesktopPane().add(historial);
         historial.setVisible(true);
-        
+
         this.setVisible(false);
     }//GEN-LAST:event_bt_historial_InventarioActionPerformed
 
@@ -379,19 +393,23 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
         }
         javax.swing.JDesktopPane dp = getDesktopPane();
         if (dp == null) return;
-        for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
-            if (f instanceof FRMInventario) {
-                FRMNEditarInventario nuevoAmb = new FRMEditarInventario((FRMInventario) f);
-                nuevoAmb.cargarAmbiente(amb);
-                dp.add(nuevoAmb);
-                nuevoAmb.setVisible(true);
-                setVisible(false);
-                break;
-            }
-        }
+        FRMEditarInventario editarInv = new FRMEditarInventario();
+        editarInv.cargarInformacionInventario(amb.getIdAmbiente());
+        dp.add(editarInv);
+        editarInv.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_bt_editar_InventarioActionPerformed
 
-    
+    private void bt_checklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_checklistActionPerformed
+        FRMCheckList check = new FRMCheckList();
+        check.cargarCheckList(idAmbiente);
+        javax.swing.JDesktopPane dp = getDesktopPane();
+        if (dp != null) {
+            dp.add(check);
+            check.setVisible(true);
+            setVisible(false);
+        }
+    }//GEN-LAST:event_bt_checklistActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_Cerrar_sesion;

@@ -294,8 +294,20 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
             javax.swing.JOptionPane.YES_NO_OPTION
         );
         if (opcion == javax.swing.JOptionPane.YES_OPTION) {
-            FRMLogin login = new FRMLogin();
-            this.getDesktopPane().add(login);
+            javax.swing.JDesktopPane dp = getDesktopPane();
+            FRMLogin login = null;
+            if (dp != null) {
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMLogin) {
+                        login = (FRMLogin) f;
+                        break;
+                    }
+                }
+            }
+            if (login == null) {
+                login = new FRMLogin();
+                if (dp != null) dp.add(login);
+            }
             login.setVisible(true);
             this.dispose();
         }

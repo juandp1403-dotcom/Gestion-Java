@@ -6,9 +6,13 @@ package vistas;
 
 import javax.swing.JOptionPane;
 import modelo.Ambiente;
+import modelo.Articulo;
+import modelo.ConexionBD;
+import modelo.InventarioAmbiente;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -256,8 +260,20 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
         int opcion = JOptionPane.showConfirmDialog(this,
             "¿Desea cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
-            FRMLogin login = new FRMLogin();
-            this.getDesktopPane().add(login);
+            javax.swing.JDesktopPane dp = getDesktopPane();
+            FRMLogin login = null;
+            if (dp != null) {
+                for (javax.swing.JInternalFrame f : dp.getAllFrames()) {
+                    if (f instanceof FRMLogin) {
+                        login = (FRMLogin) f;
+                        break;
+                    }
+                }
+            }
+            if (login == null) {
+                login = new FRMLogin();
+                if (dp != null) dp.add(login);
+            }
             login.setVisible(true);
             this.dispose();
         }
@@ -267,7 +283,14 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
         JPanel fila = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         JLabel lblNombre = new JLabel("Artículo:");
-        JTextField txtNombre = new JTextField(10);
+        JComboBox<Articulo> cbxArticulo = new JComboBox<>();
+        java.util.Iterator<Articulo> articulos = new Articulo().listar();
+        while (articulos.hasNext()) {
+            Articulo art = articulos.next();
+            if (!"Sin registros".equals(art.getNombre())) {
+                cbxArticulo.addItem(art);
+            }
+        }
 
         JLabel lblCant = new JLabel("Cantidad:");
         JTextField txtCantidad = new JTextField(5);
@@ -284,7 +307,7 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
     });
 
     fila.add(lblNombre);
-    fila.add(txtNombre);
+    fila.add(cbxArticulo);
     fila.add(lblCant);
     fila.add(txtCantidad);
     fila.add(lblMin);
@@ -296,6 +319,48 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
     panelArticulos.revalidate();
     panelArticulos.repaint();
     }//GEN-LAST:event_bt_añadirArticuloActionPerformed
+
+    private void guardarArticulosInventario(int idAmbiente) {
+        InventarioAmbiente ia = new InventarioAmbiente();
+        ia.eliminarPorAmbiente(idAmbiente);
+
+        for (java.awt.Component comp : panelArticulos.getComponents()) {
+            if (comp instanceof JPanel) {
+                JPanel fila = (JPanel) comp;
+                JComboBox<Articulo> cbx = null;
+                JTextField txtCant = null, txtMin = null;
+                for (java.awt.Component c : fila.getComponents()) {
+                    if (c instanceof JComboBox) {
+                        cbx = (JComboBox<Articulo>) c;
+                    } else if (c instanceof JTextField) {
+                        if (txtCant == null) {
+                            txtCant = (JTextField) c;
+                        } else {
+                            txtMin = (JTextField) c;
+                        }
+                    }
+                }
+                if (cbx != null && cbx.getSelectedItem() != null && txtCant != null) {
+                    Articulo art = (Articulo) cbx.getSelectedItem();
+                    int cantidad = 0;
+                    int cantidadMinima = 0;
+                    try {
+                        cantidad = Integer.parseInt(txtCant.getText().trim());
+                        cantidadMinima = (txtMin != null && !txtMin.getText().trim().isEmpty())
+                            ? Integer.parseInt(txtMin.getText().trim()) : 0;
+                    } catch (NumberFormatException e) {
+                        continue;
+                    }
+                    InventarioAmbiente inv = new InventarioAmbiente();
+                    inv.setIdAmbiente(idAmbiente);
+                    inv.setIdArticulo(art.getIdArticulo());
+                    inv.setCantidad(cantidad);
+                    inv.setCantidadMinima(cantidadMinima);
+                    inv.insertar();
+                }
+            }
+        }
+    }
 
     private void bt_crearAmbienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_crearAmbienteActionPerformed
         String nombre = txt_Ambiente.getText().trim();
@@ -328,19 +393,21 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
             a.setDescripcion("");
 
             if (editando && ambienteActual != null) {
-                a.setIdAmbiente(
-                        ambienteActual.getIdAmbiente());
+                a.setIdAmbiente(ambienteActual.getIdAmbiente());
                 a.modificar();
-
                 JOptionPane.showMessageDialog(this,
                         "Ambiente actualizado correctamente");
             } else {
                 a.insertar();
-
+                Ambiente temp = a.buscarPorNombre(nombre);
+                if (temp != null) {
+                    a.setIdAmbiente(temp.getIdAmbiente());
+                }
                 JOptionPane.showMessageDialog(this,
                     "Ambiente creado correctamente");
             }
 
+            guardarArticulosInventario(a.getIdAmbiente());
             frmInventario.cargarAmbientes();
 
         } catch (Exception ex) {

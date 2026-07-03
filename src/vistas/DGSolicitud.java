@@ -22,6 +22,22 @@ public class DGSolicitud extends javax.swing.JDialog {
         initComponents();
         tat_Solicitud.setText("Describe lo necesario...");
         tat_Solicitud.setForeground(Color.GRAY);
+        tat_Solicitud.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (tat_Solicitud.getText().equals("Describe lo necesario...")) {
+                    tat_Solicitud.setText("");
+                    tat_Solicitud.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (tat_Solicitud.getText().isEmpty()) {
+                    tat_Solicitud.setText("Describe lo necesario...");
+                    tat_Solicitud.setForeground(Color.GRAY);
+                }
+            }
+        });
     }
 
     /**
