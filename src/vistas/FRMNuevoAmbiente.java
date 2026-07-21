@@ -4,18 +4,13 @@
  */
 package vistas;
 
-import javax.swing.JOptionPane;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
 import modelo.Ambiente;
 import modelo.Articulo;
 import modelo.ConexionBD;
 import modelo.InventarioAmbiente;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
 
@@ -31,6 +26,73 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
          bt_eliminar.setVisible(false);
 
          initComponents();
+         
+         jPanel1.setBackground(new Color(40, 167, 69));
+         for (Component c : jPanel1.getComponents()) {
+             if (c instanceof JLabel) {
+                 ((JLabel) c).setForeground(Color.WHITE);
+             }
+             if (c instanceof JButton) {
+                 ((JButton) c).setBackground(new Color(33, 136, 56));
+                 ((JButton) c).setForeground(Color.WHITE);
+                 ((JButton) c).setFocusPainted(false);
+                 ((JButton) c).setBorderPainted(false);
+             }
+         }
+         jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+         jLabel2.setForeground(Color.WHITE);
+         jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
+         jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+         jLabel3.setForeground(new Color(40, 167, 69));
+         
+         txt_Ambiente.setBorder(BorderFactory.createCompoundBorder(
+             new LineBorder(new Color(206, 212, 218), 1, true),
+             BorderFactory.createEmptyBorder(5, 8, 5, 8)
+         ));
+         txt_Ambiente.setFont(new Font("Arial", Font.PLAIN, 13));
+         txt_ubicacion.setBorder(BorderFactory.createCompoundBorder(
+             new LineBorder(new Color(206, 212, 218), 1, true),
+             BorderFactory.createEmptyBorder(5, 8, 5, 8)
+         ));
+         txt_ubicacion.setFont(new Font("Arial", Font.PLAIN, 13));
+         bt_crearAmbiente.setBackground(new Color(40, 167, 69));
+         bt_crearAmbiente.setForeground(Color.WHITE);
+         bt_crearAmbiente.setFocusPainted(false);
+         bt_crearAmbiente.setBorderPainted(false);
+         bt_crearAmbiente.setOpaque(true);
+         bt_crearAmbiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         bt_añadirArticulo.setBackground(new Color(40, 167, 69));
+         bt_añadirArticulo.setForeground(Color.WHITE);
+         bt_añadirArticulo.setFocusPainted(false);
+         bt_añadirArticulo.setBorderPainted(false);
+         bt_añadirArticulo.setOpaque(true);
+         bt_añadirArticulo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         bt_Cancelar.setBackground(Color.WHITE);
+         bt_Cancelar.setForeground(new Color(40, 167, 69));
+         bt_Cancelar.setFocusPainted(false);
+         bt_Cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+         bt_Cancelar.setOpaque(true);
+         bt_Cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         bt_Cerrar_sesion.setBackground(Color.WHITE);
+         bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+         bt_Cerrar_sesion.setFocusPainted(false);
+         bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+         bt_Cerrar_sesion.setOpaque(true);
+         bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         bt_volver.setBackground(Color.WHITE);
+         bt_volver.setForeground(new Color(40, 167, 69));
+         bt_volver.setFocusPainted(false);
+         bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+         bt_volver.setOpaque(true);
+         bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         bt_eliminar.setBackground(Color.WHITE);
+         bt_eliminar.setForeground(new Color(40, 167, 69));
+         bt_eliminar.setFocusPainted(false);
+         bt_eliminar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+         bt_eliminar.setOpaque(true);
+         bt_eliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+         
+         this.getContentPane().setBackground(new Color(245, 245, 245));
 
          bt_eliminar.addActionListener(this::bt_eliminarActionPerformed);
 

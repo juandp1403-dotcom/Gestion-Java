@@ -4,7 +4,9 @@
  */
 package vistas;
 
-import java.awt.Color;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  *
@@ -20,6 +22,27 @@ public class DGReporte extends javax.swing.JDialog {
     public DGReporte(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        jPanel1.setBackground(Color.WHITE);
+        jPanel1.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(40, 167, 69), 2, true),
+            BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        ));
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel1.setForeground(new Color(40, 167, 69));
+        bt_enviar.setBackground(new Color(40, 167, 69));
+        bt_enviar.setForeground(Color.WHITE);
+        bt_enviar.setFocusPainted(false);
+        bt_enviar.setBorderPainted(false);
+        bt_enviar.setOpaque(true);
+        bt_enviar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_cancelar.setBackground(Color.WHITE);
+        bt_cancelar.setForeground(new Color(40, 167, 69));
+        bt_cancelar.setFocusPainted(false);
+        bt_cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_cancelar.setOpaque(true);
+        bt_cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.getContentPane().setBackground(new Color(245, 245, 245));
         tat_Reporte.setText("Describe lo necesario...");
         tat_Reporte.setForeground(Color.GRAY);
         tat_Reporte.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -98,9 +121,9 @@ public class DGReporte extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bt_enviar)
-                    .addComponent(bt_cancelar))
+                    .addComponent(bt_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 

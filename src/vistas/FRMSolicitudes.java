@@ -4,7 +4,10 @@
  */
 package vistas;
 
-import java.awt.Color;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import modelo.Solicitud;
 
 /**
@@ -20,6 +23,52 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
      */
     public FRMSolicitudes() {
         initComponents();
+        
+        jPanel1.setBackground(new Color(40, 167, 69));
+        for (Component c : jPanel1.getComponents()) {
+            if (c instanceof JLabel) {
+                ((JLabel) c).setForeground(Color.WHITE);
+            }
+            if (c instanceof JButton) {
+                ((JButton) c).setBackground(new Color(33, 136, 56));
+                ((JButton) c).setForeground(Color.WHITE);
+                ((JButton) c).setFocusPainted(false);
+                ((JButton) c).setBorderPainted(false);
+            }
+        }
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel2.setForeground(Color.WHITE);
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel3.setForeground(new Color(40, 167, 69));
+        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel4.setForeground(new Color(51, 51, 51));
+        tb_Solicitudes.setSelectionBackground(new Color(40, 167, 69));
+        tb_Solicitudes.setSelectionForeground(Color.WHITE);
+        tb_Solicitudes.setGridColor(new Color(220, 220, 220));
+        tb_Solicitudes.setRowHeight(28);
+        tb_Solicitudes.getTableHeader().setBackground(new Color(40, 167, 69));
+        tb_Solicitudes.getTableHeader().setForeground(Color.WHITE);
+        tb_Solicitudes.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        tb_Solicitudes.getTableHeader().setReorderingAllowed(false);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tb_Solicitudes.getColumnCount(); i++) {
+            tb_Solicitudes.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        bt_Cerrar_sesion.setBackground(Color.WHITE);
+        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+        bt_Cerrar_sesion.setFocusPainted(false);
+        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_Cerrar_sesion.setOpaque(true);
+        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_volver.setBackground(Color.WHITE);
+        bt_volver.setForeground(new Color(40, 167, 69));
+        bt_volver.setFocusPainted(false);
+        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_volver.setOpaque(true);
+        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.getContentPane().setBackground(new Color(245, 245, 245));
         addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
                 javax.swing.JDesktopPane dp = escritorio;

@@ -4,7 +4,9 @@
  */
 package vistas;
 
-import javax.swing.JOptionPane;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
 import modelo.Usuario;
 import java.util.Map;
 
@@ -22,6 +24,83 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
     public FRMRegistrarse(boolean fromLogin) {
         this.fromLogin = fromLogin;
         initComponents();
+        
+        jPanel2.setBackground(new Color(40, 167, 69));
+        for (Component c : jPanel2.getComponents()) {
+            if (c instanceof JLabel) {
+                ((JLabel) c).setForeground(Color.WHITE);
+            }
+            if (c instanceof JButton) {
+                ((JButton) c).setBackground(new Color(33, 136, 56));
+                ((JButton) c).setForeground(Color.WHITE);
+                ((JButton) c).setFocusPainted(false);
+                ((JButton) c).setBorderPainted(false);
+            }
+        }
+        jLabel7.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel8.setForeground(Color.WHITE);
+        jLabel8.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel1.setForeground(new Color(40, 167, 69));
+        
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel2.setForeground(new Color(51, 51, 51));
+        jLabel3.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel3.setForeground(new Color(51, 51, 51));
+        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel4.setForeground(new Color(51, 51, 51));
+        jLabel5.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel5.setForeground(new Color(51, 51, 51));
+        jLabel6.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel6.setForeground(new Color(51, 51, 51));
+        
+        txt_nombre.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        txt_nombre.setFont(new Font("Arial", Font.PLAIN, 13));
+        txt_correo.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        txt_correo.setFont(new Font("Arial", Font.PLAIN, 13));
+        pf_contraseña.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        pf_contraseña.setFont(new Font("Arial", Font.PLAIN, 13));
+        ps_confi_contraseña.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        ps_confi_contraseña.setFont(new Font("Arial", Font.PLAIN, 13));
+        
+        bt_crearusuario.setBackground(new Color(40, 167, 69));
+        bt_crearusuario.setForeground(Color.WHITE);
+        bt_crearusuario.setFocusPainted(false);
+        bt_crearusuario.setBorderPainted(false);
+        bt_crearusuario.setOpaque(true);
+        bt_crearusuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_cancelar.setBackground(Color.WHITE);
+        bt_cancelar.setForeground(new Color(40, 167, 69));
+        bt_cancelar.setFocusPainted(false);
+        bt_cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_cancelar.setOpaque(true);
+        bt_cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_Cerrar_sesion.setBackground(Color.WHITE);
+        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+        bt_Cerrar_sesion.setFocusPainted(false);
+        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_Cerrar_sesion.setOpaque(true);
+        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_volver.setBackground(Color.WHITE);
+        bt_volver.setForeground(new Color(40, 167, 69));
+        bt_volver.setFocusPainted(false);
+        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_volver.setOpaque(true);
+        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        this.getContentPane().setBackground(new Color(245, 245, 245));
         if (fromLogin) {
             cbx_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
                 "Selecciona un rol", "Aprendiz"

@@ -5,12 +5,15 @@
 
 package vistas;
 
+import java.awt.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import static modelo.ConexionBD.conexion;
 import modelo.HistorialRevision;
 import modelo.InventarioAmbiente;
@@ -24,6 +27,42 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
 
     public FRMCheckList() {
         initComponents();
+        
+        jPanel1.setBackground(new Color(245, 245, 245));
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel1.setForeground(new Color(40, 167, 69));
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel2.setForeground(new Color(51, 51, 51));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel3.setForeground(new Color(40, 167, 69));
+        lb_tituloAmbiente.setFont(new Font("Arial", Font.BOLD, 14));
+        lb_tituloAmbiente.setForeground(new Color(51, 51, 51));
+        
+        tb_checklist.setSelectionBackground(new Color(40, 167, 69));
+        tb_checklist.setSelectionForeground(Color.WHITE);
+        tb_checklist.setGridColor(new Color(220, 220, 220));
+        tb_checklist.setRowHeight(28);
+        tb_checklist.getTableHeader().setBackground(new Color(40, 167, 69));
+        tb_checklist.getTableHeader().setForeground(Color.WHITE);
+        tb_checklist.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        tb_checklist.getTableHeader().setReorderingAllowed(false);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tb_checklist.getColumnCount(); i++) {
+            tb_checklist.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        bt_guardar.setBackground(new Color(40, 167, 69));
+        bt_guardar.setForeground(Color.WHITE);
+        bt_guardar.setFocusPainted(false);
+        bt_guardar.setBorderPainted(false);
+        bt_guardar.setOpaque(true);
+        bt_guardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_cancelar.setBackground(Color.WHITE);
+        bt_cancelar.setForeground(new Color(40, 167, 69));
+        bt_cancelar.setFocusPainted(false);
+        bt_cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_cancelar.setOpaque(true);
+        bt_cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     @Override

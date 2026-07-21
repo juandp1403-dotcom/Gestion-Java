@@ -4,7 +4,9 @@
  */
 package vistas;
 
-import javax.swing.JOptionPane;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  *
@@ -18,6 +20,52 @@ public class FRMLogin extends javax.swing.JInternalFrame {
     public FRMLogin() {
         initComponents();
         limpiarCampos();
+        
+        jPanel3.setBackground(Color.WHITE);
+        jPanel3.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(40, 167, 69), 2, true),
+            BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        ));
+        
+        jLabel1.setForeground(new Color(40, 167, 69));
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 18));
+        jLabel3.setForeground(new Color(40, 167, 69));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel4.setForeground(new Color(51, 51, 51));
+        jLabel5.setForeground(new Color(51, 51, 51));
+        jLabel6.setForeground(new Color(51, 51, 51));
+        jLabel7.setForeground(new Color(51, 51, 51));
+        
+        txt_correo.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        txt_correo.setFont(new Font("Arial", Font.PLAIN, 13));
+        pf_contraseña.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        pf_contraseña.setFont(new Font("Arial", Font.PLAIN, 13));
+        
+        bt_entrar.setBackground(new Color(40, 167, 69));
+        bt_entrar.setForeground(Color.WHITE);
+        bt_entrar.setFocusPainted(false);
+        bt_entrar.setBorderPainted(false);
+        bt_entrar.setOpaque(true);
+        bt_entrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_entrar.setFont(new Font("Arial", Font.BOLD, 13));
+        
+        bt_registro.setBackground(Color.WHITE);
+        bt_registro.setForeground(new Color(40, 167, 69));
+        bt_registro.setFocusPainted(false);
+        bt_registro.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_registro.setOpaque(true);
+        bt_registro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_registro.setFont(new Font("Arial", Font.BOLD, 13));
+        
+        bt_inicio.setVisible(false);
+        
+        this.getContentPane().setBackground(new Color(245, 245, 245));
     }
     
     private void limpiarCampos(){

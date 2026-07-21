@@ -1,10 +1,13 @@
 package vistas;
 
+import java.awt.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import static modelo.ConexionBD.conexion;
 import modelo.HistorialRevision;
 
@@ -14,6 +17,55 @@ public class FRMHistorialRevisiones extends javax.swing.JInternalFrame {
 
     public FRMHistorialRevisiones() {
         initComponents();
+        
+        jPanel1.setBackground(new Color(40, 167, 69));
+        for (Component c : jPanel1.getComponents()) {
+            if (c instanceof JLabel) {
+                ((JLabel) c).setForeground(Color.WHITE);
+            }
+            if (c instanceof JButton) {
+                ((JButton) c).setBackground(new Color(33, 136, 56));
+                ((JButton) c).setForeground(Color.WHITE);
+                ((JButton) c).setFocusPainted(false);
+                ((JButton) c).setBorderPainted(false);
+            }
+        }
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel2.setForeground(Color.WHITE);
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel3.setForeground(new Color(40, 167, 69));
+        lb_NumAmbiente.setFont(new Font("Arial", Font.BOLD, 14));
+        lb_NumAmbiente.setForeground(new Color(51, 51, 51));
+        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel4.setForeground(new Color(51, 51, 51));
+        
+        tb_historial.setSelectionBackground(new Color(40, 167, 69));
+        tb_historial.setSelectionForeground(Color.WHITE);
+        tb_historial.setGridColor(new Color(220, 220, 220));
+        tb_historial.setRowHeight(28);
+        tb_historial.getTableHeader().setBackground(new Color(40, 167, 69));
+        tb_historial.getTableHeader().setForeground(Color.WHITE);
+        tb_historial.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        tb_historial.getTableHeader().setReorderingAllowed(false);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tb_historial.getColumnCount(); i++) {
+            tb_historial.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        bt_volver.setBackground(new Color(40, 167, 69));
+        bt_volver.setForeground(Color.WHITE);
+        bt_volver.setFocusPainted(false);
+        bt_volver.setBorderPainted(false);
+        bt_volver.setOpaque(true);
+        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_Cerrar_sesion.setBackground(Color.WHITE);
+        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+        bt_Cerrar_sesion.setFocusPainted(false);
+        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_Cerrar_sesion.setOpaque(true);
+        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.getContentPane().setBackground(new Color(245, 245, 245));
     }
 
     public void cargarInformacionInventario(int idAmbiente) {

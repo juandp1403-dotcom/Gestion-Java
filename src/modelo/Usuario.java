@@ -152,13 +152,32 @@ public class Usuario {
     //Modificar
     public void modificar(){
         try{
-            var sql = ConexionBD.conexion.prepareStatement("UPDATE usuario SET nombre=?, email=?, password=?, aprobado=?, activo=? WHERE id=?");
+            var sql = ConexionBD.conexion.prepareStatement("UPDATE usuario SET nombre=?, email=?, password=?, aprobado=?, activo=?, id_rol=? WHERE id=?");
             
             sql.setString(1, this.nombre);
             sql.setString(2, this.email);
             sql.setString(3, this.password);
             sql.setBoolean(4, this.aprovado);
             sql.setBoolean(5, this.activo);
+            sql.setInt(6, this.idRol);
+            sql.setInt(7, this.idUsuario);
+            sql.executeUpdate();
+            System.out.println("Usuario modificado correctamente");
+        }catch (Exception ex) {
+            System.err.println("Error al modificar: " + ex.getMessage());
+        }
+    }
+    
+    //Modificar sin cambiar contraseña
+    public void modificarSinPassword(){
+        try{
+            var sql = ConexionBD.conexion.prepareStatement("UPDATE usuario SET nombre=?, email=?, aprobado=?, activo=?, id_rol=? WHERE id=?");
+            
+            sql.setString(1, this.nombre);
+            sql.setString(2, this.email);
+            sql.setBoolean(3, this.aprovado);
+            sql.setBoolean(4, this.activo);
+            sql.setInt(5, this.idRol);
             sql.setInt(6, this.idUsuario);
             sql.executeUpdate();
             System.out.println("Usuario modificado correctamente");
@@ -180,6 +199,30 @@ public class Usuario {
         }
     }
     
+    //Buscar por ID
+    public Usuario buscarPorId(int id) {
+        Usuario u = null;
+        try {
+            var sql = ConexionBD.conexion.prepareStatement("SELECT * FROM usuario WHERE id=?");
+            sql.setInt(1, id);
+            var rs = sql.executeQuery();
+            if (rs.next()) {
+                u = new Usuario();
+                u.setIdUsuario(rs.getInt("id"));
+                u.setNombre(rs.getString("nombre"));
+                u.setEmail(rs.getString("email"));
+                u.setPassword(rs.getString("password"));
+                u.setCreadoEn(rs.getTimestamp("creado_en"));
+                u.setAprovado(rs.getBoolean("aprobado"));
+                u.setActivo(rs.getBoolean("activo"));
+                u.setIdRol(rs.getInt("id_rol"));
+            }
+        } catch (Exception ex) {
+            System.err.println("Error al buscar por id: " + ex.getMessage());
+        }
+        return u;
+    }
+
     //Buscar
     public Iterator<Usuario> buscar (String busqueda){
         ArrayList<Usuario> lista = new ArrayList<>();

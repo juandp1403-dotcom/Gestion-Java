@@ -4,7 +4,9 @@
  */
 package vistas;
 
-import javax.swing.JOptionPane;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  *
@@ -17,6 +19,66 @@ public class FRMMenu extends javax.swing.JInternalFrame {
      */
     public FRMMenu() {
         initComponents();
+        
+        jPanel1.setBackground(new Color(40, 167, 69));
+        for (Component c : jPanel1.getComponents()) {
+            if (c instanceof JLabel) {
+                ((JLabel) c).setForeground(Color.WHITE);
+            }
+            if (c instanceof JButton) {
+                ((JButton) c).setBackground(new Color(33, 136, 56));
+                ((JButton) c).setForeground(Color.WHITE);
+                ((JButton) c).setFocusPainted(false);
+                ((JButton) c).setBorderPainted(false);
+            }
+        }
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 13));
+        jLabel4.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel5.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
+        
+        JPanel[] cards = {jPanel3, jPanel4, jPanel5, jPanel6, jPanel7};
+        for (JPanel card : cards) {
+            card.setBackground(Color.WHITE);
+            card.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(40, 167, 69), 2, true),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            ));
+        }
+        
+        JLabel[] titulos = {jLabel6, jLabel8, jLabel10, jLabel12, jLabel14};
+        for (JLabel t : titulos) {
+            t.setFont(new Font("Arial", Font.BOLD, 14));
+            t.setForeground(new Color(40, 167, 69));
+        }
+        
+        JLabel[] desc = {jLabel7, jLabel9, jLabel11, jLabel13, jLabel15};
+        for (JLabel d : desc) {
+            d.setFont(new Font("Arial", Font.PLAIN, 11));
+            d.setForeground(new Color(51, 51, 51));
+        }
+        
+        JButton[] botones = {bt_Usuarios, bt_inventario, bt_reportes, bt_Solicitudes, bt_alertas};
+        for (JButton b : botones) {
+            b.setBackground(new Color(40, 167, 69));
+            b.setForeground(Color.WHITE);
+            b.setFocusPainted(false);
+            b.setBorderPainted(false);
+            b.setOpaque(true);
+            b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            b.setFont(new Font("Arial", Font.BOLD, 11));
+        }
+        
+        bt_Cerrar_sesion.setBackground(Color.WHITE);
+        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+        bt_Cerrar_sesion.setFocusPainted(false);
+        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_Cerrar_sesion.setOpaque(true);
+        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_Cerrar_sesion.setFont(new Font("Arial", Font.PLAIN, 11));
+        
+        this.getContentPane().setBackground(new Color(245, 245, 245));
     }
 
     /**

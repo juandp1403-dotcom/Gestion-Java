@@ -5,17 +5,13 @@
 package vistas;
 
 
-import java.awt.FlowLayout;
+import java.awt.*;
 import static modelo.ConexionBD.conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.border.*;
 import modelo.Articulo;
 import modelo.InventarioAmbiente;
 /**
@@ -31,7 +27,56 @@ public class FRMEditarInventario extends javax.swing.JInternalFrame {
      */
     public FRMEditarInventario() {
         initComponents();
+        
+        jPanel1.setBackground(new Color(40, 167, 69));
+        for (Component c : jPanel1.getComponents()) {
+            if (c instanceof JLabel) {
+                ((JLabel) c).setForeground(Color.WHITE);
+            }
+            if (c instanceof JButton) {
+                ((JButton) c).setBackground(new Color(33, 136, 56));
+                ((JButton) c).setForeground(Color.WHITE);
+                ((JButton) c).setFocusPainted(false);
+                ((JButton) c).setBorderPainted(false);
+            }
+        }
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel2.setForeground(Color.WHITE);
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel3.setForeground(new Color(40, 167, 69));
+        lb_NumAmbiente.setFont(new Font("Arial", Font.BOLD, 14));
+        lb_NumAmbiente.setForeground(new Color(51, 51, 51));
+        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel4.setForeground(new Color(51, 51, 51));
+        
+        bt_añadirArticulo.setBackground(new Color(40, 167, 69));
+        bt_añadirArticulo.setForeground(Color.WHITE);
+        bt_añadirArticulo.setFocusPainted(false);
+        bt_añadirArticulo.setBorderPainted(false);
+        bt_añadirArticulo.setOpaque(true);
+        bt_añadirArticulo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_GuardarInventario.setBackground(new Color(40, 167, 69));
+        bt_GuardarInventario.setForeground(Color.WHITE);
+        bt_GuardarInventario.setFocusPainted(false);
+        bt_GuardarInventario.setBorderPainted(false);
+        bt_GuardarInventario.setOpaque(true);
+        bt_GuardarInventario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_cancelar.setBackground(Color.WHITE);
+        bt_cancelar.setForeground(new Color(40, 167, 69));
+        bt_cancelar.setFocusPainted(false);
+        bt_cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_cancelar.setOpaque(true);
+        bt_cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_Cerrar_sesion.setBackground(Color.WHITE);
+        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+        bt_Cerrar_sesion.setFocusPainted(false);
+        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_Cerrar_sesion.setOpaque(true);
+        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
         panelArticulos.setLayout(new javax.swing.BoxLayout(panelArticulos, javax.swing.BoxLayout.Y_AXIS));
+        this.getContentPane().setBackground(new Color(245, 245, 245));
     }
      public void cargarInformacionInventario(int idAmbiente) {
         this.idAmbiente = idAmbiente;

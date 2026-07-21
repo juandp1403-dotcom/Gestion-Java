@@ -4,10 +4,13 @@
  */
 package vistas;
 
-import java.awt.Color;
-import modelo.Usuario;
+import java.awt.*;
 import java.util.Iterator;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.border.*;
+import modelo.Usuario;
 /**
  *
  * @author lemag
@@ -21,6 +24,77 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
      */
     public FRMUsuarios() {
         initComponents();
+        
+        jPanel1.setBackground(new Color(40, 167, 69));
+        for (Component c : jPanel1.getComponents()) {
+            if (c instanceof JLabel) {
+                ((JLabel) c).setForeground(Color.WHITE);
+            }
+            if (c instanceof JButton) {
+                ((JButton) c).setBackground(new Color(33, 136, 56));
+                ((JButton) c).setForeground(Color.WHITE);
+                ((JButton) c).setFocusPainted(false);
+                ((JButton) c).setBorderPainted(false);
+            }
+        }
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel2.setForeground(Color.WHITE);
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel3.setForeground(new Color(40, 167, 69));
+        
+        txt_busqueda.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        txt_busqueda.setFont(new Font("Arial", Font.PLAIN, 13));
+        bt_Agregar_usuario.setBackground(new Color(40, 167, 69));
+        bt_Agregar_usuario.setForeground(Color.WHITE);
+        bt_Agregar_usuario.setFocusPainted(false);
+        bt_Agregar_usuario.setBorderPainted(false);
+        bt_Agregar_usuario.setOpaque(true);
+        bt_Agregar_usuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_Agregar_usuario.setFont(new Font("Arial", Font.BOLD, 12));
+        bt_editar.setBackground(Color.WHITE);
+        bt_editar.setForeground(new Color(40, 167, 69));
+        bt_editar.setFocusPainted(false);
+        bt_editar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_editar.setOpaque(true);
+        bt_editar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_eliminar.setBackground(Color.WHITE);
+        bt_eliminar.setForeground(new Color(40, 167, 69));
+        bt_eliminar.setFocusPainted(false);
+        bt_eliminar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_eliminar.setOpaque(true);
+        bt_eliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_Cerrar_sesion.setBackground(Color.WHITE);
+        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+        bt_Cerrar_sesion.setFocusPainted(false);
+        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_Cerrar_sesion.setOpaque(true);
+        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_volver.setBackground(Color.WHITE);
+        bt_volver.setForeground(new Color(40, 167, 69));
+        bt_volver.setFocusPainted(false);
+        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_volver.setOpaque(true);
+        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        tb_Usuarios.setSelectionBackground(new Color(40, 167, 69));
+        tb_Usuarios.setSelectionForeground(Color.WHITE);
+        tb_Usuarios.setGridColor(new Color(220, 220, 220));
+        tb_Usuarios.setRowHeight(28);
+        tb_Usuarios.getTableHeader().setBackground(new Color(40, 167, 69));
+        tb_Usuarios.getTableHeader().setForeground(Color.WHITE);
+        tb_Usuarios.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        tb_Usuarios.getTableHeader().setReorderingAllowed(false);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < tb_Usuarios.getColumnCount(); i++) {
+            tb_Usuarios.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        
+        this.getContentPane().setBackground(new Color(245, 245, 245));
         txt_busqueda.setText("Buscar por nombre, email o rol...");
         txt_busqueda.setForeground(Color.GRAY);
         txt_busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -207,6 +281,7 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tb_Usuarios);
 
         bt_editar.setText("Editar");
+        bt_editar.addActionListener(this::bt_editarActionPerformed);
 
         bt_eliminar.setText("Eliminar ");
 
@@ -332,6 +407,26 @@ public class FRMUsuarios extends javax.swing.JInternalFrame {
         this.dispose();
     
     }//GEN-LAST:event_bt_volverActionPerformed
+
+    private void bt_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_editarActionPerformed
+        int fila = tb_Usuarios.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario de la tabla", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int id = (int) tb_Usuarios.getValueAt(fila, 0);
+        Usuario u = new Usuario();
+        Usuario encontrado = u.buscarPorId(id);
+        if (encontrado == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo encontrar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Frame parent = (Frame) SwingUtilities.getWindowAncestor(this);
+        DGREditar_usuario dialogo = new DGREditar_usuario(parent, true);
+        dialogo.cargarUsuario(encontrado);
+        dialogo.setVisible(true);
+        cargarUsuarios();
+    }//GEN-LAST:event_bt_editarActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import java.awt.*;
 import java.beans.PropertyVetoException;
 import javax.swing.JFrame;
 
@@ -20,6 +21,16 @@ public class MDI_inventario extends javax.swing.JFrame {
     public MDI_inventario() {
         modelo.ConexionBD.getInstance();
         initComponents();
+        
+        menuBar.setBackground(new Color(40, 167, 69));
+        menuBar.setForeground(Color.BLACK);
+        fileMenu.setForeground(Color.BLACK);
+        editMenu.setForeground(Color.BLACK);
+        helpMenu.setForeground(Color.BLACK);
+        for (int i = 0; i < menuBar.getMenuCount(); i++) {
+            menuBar.getMenu(i).setForeground(Color.BLACK);
+        }
+        
         if (!modelo.ConexionBD.isConectado()) {
             javax.swing.JOptionPane.showMessageDialog(
                 this,

@@ -4,16 +4,16 @@
  */
 package vistas;
 
-import java.awt.Color;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import modelo.Ambiente;
-import java.awt.Dimension;
-import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 
 /**
@@ -29,8 +29,56 @@ public class FRMInventario extends javax.swing.JInternalFrame {
      */
     public FRMInventario() {
         initComponents();
+        
+        jPanel1.setBackground(new Color(40, 167, 69));
+        for (Component c : jPanel1.getComponents()) {
+            if (c instanceof JLabel) {
+                ((JLabel) c).setForeground(Color.WHITE);
+            }
+            if (c instanceof JButton) {
+                ((JButton) c).setBackground(new Color(33, 136, 56));
+                ((JButton) c).setForeground(Color.WHITE);
+                ((JButton) c).setFocusPainted(false);
+                ((JButton) c).setBorderPainted(false);
+            }
+        }
+        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
+        jLabel1.setForeground(Color.WHITE);
+        jLabel2.setForeground(Color.WHITE);
+        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
+        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
+        jLabel3.setForeground(new Color(40, 167, 69));
+        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
+        jLabel4.setForeground(new Color(51, 51, 51));
+        
+        txt_buscar_ambiente.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(206, 212, 218), 1, true),
+            BorderFactory.createEmptyBorder(5, 8, 5, 8)
+        ));
+        txt_buscar_ambiente.setFont(new Font("Arial", Font.PLAIN, 13));
+        bt_añadir_amb.setBackground(new Color(40, 167, 69));
+        bt_añadir_amb.setForeground(Color.WHITE);
+        bt_añadir_amb.setFocusPainted(false);
+        bt_añadir_amb.setBorderPainted(false);
+        bt_añadir_amb.setOpaque(true);
+        bt_añadir_amb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_añadir_amb.setFont(new Font("Arial", Font.BOLD, 12));
+        bt_Cerrar_sesion.setBackground(Color.WHITE);
+        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
+        bt_Cerrar_sesion.setFocusPainted(false);
+        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_Cerrar_sesion.setOpaque(true);
+        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        bt_volver.setBackground(Color.WHITE);
+        bt_volver.setForeground(new Color(40, 167, 69));
+        bt_volver.setFocusPainted(false);
+        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
+        bt_volver.setOpaque(true);
+        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
         panelTarjetas.setLayout(new java.awt.FlowLayout(
             java.awt.FlowLayout.LEFT,15,15));
+        panelTarjetas.setBackground(new Color(245, 245, 245));
         
         txt_buscar_ambiente.setText("Buscar por nombre...");
         txt_buscar_ambiente.setForeground(Color.GRAY);
@@ -70,18 +118,31 @@ public class FRMInventario extends javax.swing.JInternalFrame {
         JPanel tarjeta = new JPanel();
         tarjeta.setPreferredSize(new Dimension(250, 140));
         tarjeta.setBackground(Color.WHITE);
-        tarjeta.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        tarjeta.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(40, 167, 69), 2, true),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
 
         JLabel lblNombre = new JLabel(amb.getNombre(), SwingConstants.CENTER);
-        lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
+        lblNombre.setForeground(new Color(40, 167, 69));
         lblNombre.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 
         JLabel lblTipo = new JLabel(amb.getTipo(), SwingConstants.CENTER);
+        lblTipo.setFont(new Font("Arial", Font.PLAIN, 12));
+        lblTipo.setForeground(new Color(51, 51, 51));
         lblTipo.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 
         JButton btnVer = new JButton("Ver inventario");
         btnVer.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        btnVer.setBackground(new Color(40, 167, 69));
+        btnVer.setForeground(Color.WHITE);
+        btnVer.setFocusPainted(false);
+        btnVer.setBorderPainted(false);
+        btnVer.setOpaque(true);
+        btnVer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnVer.setFont(new Font("Arial", Font.BOLD, 11));
         btnVer.addActionListener(e -> {
             FRMDetalleInventario detalle = new FRMDetalleInventario();
             detalle.cargarInformacionInventario(amb.getIdAmbiente());
