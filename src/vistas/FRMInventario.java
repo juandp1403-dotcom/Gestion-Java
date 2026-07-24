@@ -7,6 +7,7 @@ package vistas;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import modelo.Ambiente;
+import modelo.ThemeUtil;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -29,61 +30,47 @@ public class FRMInventario extends javax.swing.JInternalFrame {
      */
     public FRMInventario() {
         initComponents();
-        
-        jPanel1.setBackground(new Color(40, 167, 69));
-        for (Component c : jPanel1.getComponents()) {
-            if (c instanceof JLabel) {
-                ((JLabel) c).setForeground(Color.WHITE);
-            }
-            if (c instanceof JButton) {
-                ((JButton) c).setBackground(new Color(33, 136, 56));
-                ((JButton) c).setForeground(Color.WHITE);
-                ((JButton) c).setFocusPainted(false);
-                ((JButton) c).setBorderPainted(false);
-            }
-        }
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
-        jLabel1.setForeground(Color.WHITE);
-        jLabel2.setForeground(Color.WHITE);
-        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
-        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
-        jLabel3.setForeground(new Color(40, 167, 69));
-        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel4.setForeground(new Color(51, 51, 51));
-        
-        txt_buscar_ambiente.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(new Color(206, 212, 218), 1, true),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
-        ));
-        txt_buscar_ambiente.setFont(new Font("Arial", Font.PLAIN, 13));
-        bt_añadir_amb.setBackground(new Color(40, 167, 69));
-        bt_añadir_amb.setForeground(Color.WHITE);
-        bt_añadir_amb.setFocusPainted(false);
-        bt_añadir_amb.setBorderPainted(false);
-        bt_añadir_amb.setOpaque(true);
-        bt_añadir_amb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_añadir_amb.setFont(new Font("Arial", Font.BOLD, 12));
-        bt_Cerrar_sesion.setBackground(Color.WHITE);
-        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
-        bt_Cerrar_sesion.setFocusPainted(false);
-        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_Cerrar_sesion.setOpaque(true);
-        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_volver.setBackground(Color.WHITE);
-        bt_volver.setForeground(new Color(40, 167, 69));
-        bt_volver.setFocusPainted(false);
-        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_volver.setOpaque(true);
-        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
+
+        ThemeUtil.styleHeader(jPanel1);
+        jLabel1.setFont(ThemeUtil.FONT_TITLE);
+        ThemeUtil.styleLabel(jLabel2);
+
+        ThemeUtil.styleSectionTitle(jLabel3);
+        ThemeUtil.styleLabel(jLabel4);
+
+        ThemeUtil.styleTextField(txt_buscar_ambiente);
+        ThemeUtil.stylePrimaryButton(bt_añadir_amb, ThemeUtil.FONT_BODY_BOLD);
+        ThemeUtil.styleSecondaryButton(bt_Cerrar_sesion);
+        ThemeUtil.styleSecondaryButton(bt_volver);
+
         panelTarjetas.setLayout(new java.awt.FlowLayout(
             java.awt.FlowLayout.LEFT,15,15));
-        panelTarjetas.setBackground(new Color(245, 245, 245));
-        
+        panelTarjetas.setBackground(ThemeUtil.BG);
+
         txt_buscar_ambiente.setText("Buscar por nombre...");
-        txt_buscar_ambiente.setForeground(Color.GRAY);
-        
+        txt_buscar_ambiente.addFocusListener(new java.awt.event.FocusAdapter() {
+
+    @Override
+    public void focusGained(java.awt.event.FocusEvent evt) {
+        if (txt_buscar_ambiente.getText().equals("Buscar por nombre...")) {
+            txt_buscar_ambiente.setText("");
+            txt_buscar_ambiente.setForeground(Color.BLACK);
+        }
+    }
+
+    @Override
+    public void focusLost(java.awt.event.FocusEvent evt) {
+        if (txt_buscar_ambiente.getText().trim().isEmpty()) {
+            txt_buscar_ambiente.setText("Buscar por nombre...");
+            txt_buscar_ambiente.setForeground(Color.GRAY);
+        }
+    }
+
+});
+
         cargarAmbientes();
+
+        
         addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
                 javax.swing.JDesktopPane dp = escritorio;
@@ -117,32 +104,20 @@ public class FRMInventario extends javax.swing.JInternalFrame {
     private JPanel crearTarjeta(Ambiente amb) {
         JPanel tarjeta = new JPanel();
         tarjeta.setPreferredSize(new Dimension(250, 140));
-        tarjeta.setBackground(Color.WHITE);
-        tarjeta.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(new Color(40, 167, 69), 2, true),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
+        ThemeUtil.styleCard(tarjeta);
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
 
         JLabel lblNombre = new JLabel(amb.getNombre(), SwingConstants.CENTER);
-        lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
-        lblNombre.setForeground(new Color(40, 167, 69));
+        ThemeUtil.styleLabel(lblNombre, ThemeUtil.PRIMARY, ThemeUtil.FONT_TITLE);
         lblNombre.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 
         JLabel lblTipo = new JLabel(amb.getTipo(), SwingConstants.CENTER);
-        lblTipo.setFont(new Font("Arial", Font.PLAIN, 12));
-        lblTipo.setForeground(new Color(51, 51, 51));
+        ThemeUtil.styleLabel(lblTipo);
         lblTipo.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 
         JButton btnVer = new JButton("Ver inventario");
         btnVer.setAlignmentX(JPanel.CENTER_ALIGNMENT);
-        btnVer.setBackground(new Color(40, 167, 69));
-        btnVer.setForeground(Color.WHITE);
-        btnVer.setFocusPainted(false);
-        btnVer.setBorderPainted(false);
-        btnVer.setOpaque(true);
-        btnVer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnVer.setFont(new Font("Arial", Font.BOLD, 11));
+        ThemeUtil.stylePrimaryButton(btnVer, ThemeUtil.FONT_BTN_SM);
         btnVer.addActionListener(e -> {
             FRMDetalleInventario detalle = new FRMDetalleInventario();
             detalle.cargarInformacionInventario(amb.getIdAmbiente());
@@ -212,7 +187,6 @@ public class FRMInventario extends javax.swing.JInternalFrame {
         bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
 
         bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_volver.setText("<-");
         bt_volver.addActionListener(this::bt_volverActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -224,22 +198,26 @@ public class FRMInventario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
+                        .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(263, 263, 263)
                         .addComponent(bt_Cerrar_sesion)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 143, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_Cerrar_sesion)

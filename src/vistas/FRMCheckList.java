@@ -18,6 +18,7 @@ import static modelo.ConexionBD.conexion;
 import modelo.HistorialRevision;
 import modelo.InventarioAmbiente;
 import modelo.Movimiento;
+import modelo.ThemeUtil;
 
 public class FRMCheckList extends javax.swing.JInternalFrame {
 
@@ -27,42 +28,19 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
 
     public FRMCheckList() {
         initComponents();
-        
-        jPanel1.setBackground(new Color(245, 245, 245));
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
-        jLabel1.setForeground(new Color(40, 167, 69));
-        jLabel2.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel2.setForeground(new Color(51, 51, 51));
-        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
-        jLabel3.setForeground(new Color(40, 167, 69));
-        lb_tituloAmbiente.setFont(new Font("Arial", Font.BOLD, 14));
-        lb_tituloAmbiente.setForeground(new Color(51, 51, 51));
-        
-        tb_checklist.setSelectionBackground(new Color(40, 167, 69));
-        tb_checklist.setSelectionForeground(Color.WHITE);
-        tb_checklist.setGridColor(new Color(220, 220, 220));
-        tb_checklist.setRowHeight(28);
-        tb_checklist.getTableHeader().setBackground(new Color(40, 167, 69));
-        tb_checklist.getTableHeader().setForeground(Color.WHITE);
-        tb_checklist.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
-        tb_checklist.getTableHeader().setReorderingAllowed(false);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < tb_checklist.getColumnCount(); i++) {
-            tb_checklist.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-        bt_guardar.setBackground(new Color(40, 167, 69));
-        bt_guardar.setForeground(Color.WHITE);
-        bt_guardar.setFocusPainted(false);
-        bt_guardar.setBorderPainted(false);
-        bt_guardar.setOpaque(true);
-        bt_guardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_cancelar.setBackground(Color.WHITE);
-        bt_cancelar.setForeground(new Color(40, 167, 69));
-        bt_cancelar.setFocusPainted(false);
-        bt_cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_cancelar.setOpaque(true);
-        bt_cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        ThemeUtil.styleContentPane(this);
+        ThemeUtil.styleLabel(jLabel1, ThemeUtil.PRIMARY, ThemeUtil.FONT_TITLE);
+        ThemeUtil.styleLabel(jLabel2);
+        ThemeUtil.styleSectionTitle(jLabel3);
+        ThemeUtil.styleLabel(lb_tituloAmbiente);
+
+        ThemeUtil.styleTable(tb_checklist);
+        tb_checklist.getColumnModel().getColumn(0).setCellRenderer(tb_checklist.getDefaultRenderer(Boolean.class));
+        tb_checklist.getColumnModel().getColumn(0).setCellEditor(tb_checklist.getDefaultEditor(Boolean.class));
+
+        ThemeUtil.stylePrimaryButton(bt_guardar_check);
+        ThemeUtil.styleSecondaryButton(bt_cancelar);
     }
 
     @Override
@@ -114,6 +92,7 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
     }
 
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -125,31 +104,34 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_checklist = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        bt_guardar = new javax.swing.JButton();
+        bt_guardar_check = new javax.swing.JButton();
         bt_cancelar = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14));
+        setIconifiable(true);
+        setMaximizable(true);
+
+        jLabel1.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Checklist de Inventario");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Revisa cada art\u00edculo. Marca como revisado si est\u00e1 presente y en buen estado. Opcionalmente agrega observaciones por cada uno.");
+        jLabel2.setText("Revisa cada artículo. Marca como revisado si está presente y en buen estado. Opcionalmente agrega observaciones por cada uno.");
 
-        jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 14));
+        jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 14)); // NOI18N
         jLabel3.setText("Ambiente:");
 
-        lb_tituloAmbiente.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        lb_tituloAmbiente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         tb_checklist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Revisado", "Art\u00edculo", "Actual / Min", "Estado", "Observaciones", "idInventario", "idArticulo"
+                "Revisado", "Artículo", "Actual / Min", "Estado", "Observaciones", "idInventario", "idArticulo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 true, false, false, false, true, false, false
@@ -163,17 +145,10 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tb_checklist.getColumnModel().getColumn(0).setPreferredWidth(60);
-        tb_checklist.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tb_checklist.getColumnModel().getColumn(2).setPreferredWidth(80);
-        tb_checklist.getColumnModel().getColumn(3).setPreferredWidth(70);
-        tb_checklist.getColumnModel().getColumn(4).setPreferredWidth(250);
-        tb_checklist.removeColumn(tb_checklist.getColumnModel().getColumn(5));
-        tb_checklist.removeColumn(tb_checklist.getColumnModel().getColumn(5));
         jScrollPane1.setViewportView(tb_checklist);
 
-        bt_guardar.setText("Guardar Checklist");
-        bt_guardar.addActionListener(this::bt_guardarActionPerformed);
+        bt_guardar_check.setText("Enviar Checklist");
+        bt_guardar_check.addActionListener(this::bt_guardar_checkActionPerformed);
 
         bt_cancelar.setText("Cancelar");
         bt_cancelar.addActionListener(this::bt_cancelarActionPerformed);
@@ -184,17 +159,17 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(bt_guardar)
+                .addComponent(bt_guardar_check)
                 .addGap(18, 18, 18)
                 .addComponent(bt_cancelar)
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_guardar)
+                    .addComponent(bt_guardar_check)
                     .addComponent(bt_cancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -209,7 +184,7 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lb_tituloAmbiente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
@@ -220,9 +195,9 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(lb_tituloAmbiente))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -246,7 +221,7 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -262,9 +237,9 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
         );
 
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void bt_guardarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bt_guardar_checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_guardar_checkActionPerformed
         DefaultTableModel modelo = (DefaultTableModel) tb_checklist.getModel();
         int filas = modelo.getRowCount();
 
@@ -329,10 +304,10 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
             }
         }
         this.dispose();
-    }
+    }//GEN-LAST:event_bt_guardar_checkActionPerformed
 
-    private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {
-        int opcion = JOptionPane.showConfirmDialog(
+    private void bt_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarActionPerformed
+       int opcion = JOptionPane.showConfirmDialog(
             this,
             "\u00bfEst\u00e1 seguro de cancelar? Los cambios no se guardar\u00e1n.",
             "Cancelar Checklist",
@@ -350,10 +325,14 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
             }
             this.dispose();
         }
-    }
+    }//GEN-LAST:event_bt_cancelarActionPerformed
 
+
+    
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_cancelar;
-    private javax.swing.JButton bt_guardar;
+    private javax.swing.JButton bt_guardar_check;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -363,4 +342,5 @@ public class FRMCheckList extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_tituloAmbiente;
     private javax.swing.JTable tb_checklist;
+    // End of variables declaration//GEN-END:variables
 }

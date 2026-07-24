@@ -5,6 +5,7 @@
 package vistas;
 
 import modelo.Usuario;
+import modelo.ThemeUtil;
 import javax.swing.*;
 
 /**
@@ -22,8 +23,25 @@ public class DGREditar_usuario extends javax.swing.JDialog {
     public DGREditar_usuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        ThemeUtil.styleSectionTitle(jLabel1);
+        ThemeUtil.styleLabel(jLabel2);
+        ThemeUtil.styleLabel(jLabel3);
+        ThemeUtil.styleLabel(jLabel4);
+        ThemeUtil.styleLabel(jLabel5);
+
+        ThemeUtil.styleTextField(txt_nombre);
+        ThemeUtil.styleTextField(txt_correo);
+        ThemeUtil.stylePasswordField(pf_contraseña);
+        ThemeUtil.styleComboBox(cbx_rol);
+
+        ThemeUtil.stylePrimaryButton(bt_guardar);
+        ThemeUtil.styleSecondaryButton(bt_cancelar);
+
+        ThemeUtil.styleContentPane(this);
+
         cbx_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
-            "Selecciona un rol", "Aprendiz", "Instructor"
+            "Selecciona un rol", "Aprendiz", "Instructor", "Auditor", "Revisor", "Admin"
         }));
     }
     
@@ -31,9 +49,20 @@ public class DGREditar_usuario extends javax.swing.JDialog {
         this.usuarioActual = usuario;
         txt_nombre.setText(usuario.getNombre());
         txt_correo.setText(usuario.getEmail());
-        cbx_rol.setSelectedIndex(usuario.getIdRol());
+        int rol = usuario.getIdRol();
+        if (rol >= 0 && rol < cbx_rol.getItemCount()) {
+            cbx_rol.setSelectedIndex(rol);
+        }
         chk_activo.setSelected(usuario.isActivo());
         chk_aprobado.setSelected(usuario.isAprovado());
+    }
+
+    public void cargarUsuario(int idUsuario) {
+        Usuario u = new Usuario();
+        Usuario encontrado = u.buscarPorId(idUsuario);
+        if (encontrado != null) {
+            cargarUsuario(encontrado);
+        }
     }
 
     /**

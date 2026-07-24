@@ -8,6 +8,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import modelo.Usuario;
+import modelo.ThemeUtil;
 import java.util.Map;
 
 /**
@@ -24,83 +25,31 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
     public FRMRegistrarse(boolean fromLogin) {
         this.fromLogin = fromLogin;
         initComponents();
-        
-        jPanel2.setBackground(new Color(40, 167, 69));
-        for (Component c : jPanel2.getComponents()) {
-            if (c instanceof JLabel) {
-                ((JLabel) c).setForeground(Color.WHITE);
-            }
-            if (c instanceof JButton) {
-                ((JButton) c).setBackground(new Color(33, 136, 56));
-                ((JButton) c).setForeground(Color.WHITE);
-                ((JButton) c).setFocusPainted(false);
-                ((JButton) c).setBorderPainted(false);
-            }
-        }
-        jLabel7.setFont(new Font("Arial", Font.BOLD, 16));
-        jLabel8.setForeground(Color.WHITE);
-        jLabel8.setFont(new Font("Arial", Font.PLAIN, 11));
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
-        jLabel1.setForeground(new Color(40, 167, 69));
-        
-        jLabel2.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel2.setForeground(new Color(51, 51, 51));
-        jLabel3.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel3.setForeground(new Color(51, 51, 51));
-        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel4.setForeground(new Color(51, 51, 51));
-        jLabel5.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel5.setForeground(new Color(51, 51, 51));
-        jLabel6.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel6.setForeground(new Color(51, 51, 51));
-        
-        txt_nombre.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(new Color(206, 212, 218), 1, true),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
-        ));
-        txt_nombre.setFont(new Font("Arial", Font.PLAIN, 13));
-        txt_correo.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(new Color(206, 212, 218), 1, true),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
-        ));
-        txt_correo.setFont(new Font("Arial", Font.PLAIN, 13));
-        pf_contraseña.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(new Color(206, 212, 218), 1, true),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
-        ));
-        pf_contraseña.setFont(new Font("Arial", Font.PLAIN, 13));
-        ps_confi_contraseña.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(new Color(206, 212, 218), 1, true),
-            BorderFactory.createEmptyBorder(5, 8, 5, 8)
-        ));
-        ps_confi_contraseña.setFont(new Font("Arial", Font.PLAIN, 13));
-        
-        bt_crearusuario.setBackground(new Color(40, 167, 69));
-        bt_crearusuario.setForeground(Color.WHITE);
-        bt_crearusuario.setFocusPainted(false);
-        bt_crearusuario.setBorderPainted(false);
-        bt_crearusuario.setOpaque(true);
-        bt_crearusuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_cancelar.setBackground(Color.WHITE);
-        bt_cancelar.setForeground(new Color(40, 167, 69));
-        bt_cancelar.setFocusPainted(false);
-        bt_cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_cancelar.setOpaque(true);
-        bt_cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_Cerrar_sesion.setBackground(Color.WHITE);
-        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
-        bt_Cerrar_sesion.setFocusPainted(false);
-        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_Cerrar_sesion.setOpaque(true);
-        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_volver.setBackground(Color.WHITE);
-        bt_volver.setForeground(new Color(40, 167, 69));
-        bt_volver.setFocusPainted(false);
-        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_volver.setOpaque(true);
-        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
-        this.getContentPane().setBackground(new Color(245, 245, 245));
+
+        ThemeUtil.styleHeader(jPanel2);
+        jLabel7.setFont(ThemeUtil.FONT_TITLE);
+        ThemeUtil.styleLabel(jLabel8);
+
+        ThemeUtil.styleSectionTitle(jLabel1);
+
+        ThemeUtil.styleLabel(jLabel2);
+        ThemeUtil.styleLabel(jLabel3);
+        ThemeUtil.styleLabel(jLabel4);
+        ThemeUtil.styleLabel(jLabel5);
+        ThemeUtil.styleLabel(jLabel6);
+
+        ThemeUtil.styleTextField(txt_nombre);
+        ThemeUtil.styleTextField(txt_correo);
+        ThemeUtil.stylePasswordField(pf_contraseña);
+        ThemeUtil.stylePasswordField(ps_confi_contraseña);
+        ThemeUtil.styleComboBox(cbx_rol);
+
+        ThemeUtil.stylePrimaryButton(bt_crearusuario);
+        ThemeUtil.styleSecondaryButton(bt_cancelar);
+        ThemeUtil.styleSecondaryButton(bt_Cerrar_sesion);
+        ThemeUtil.styleSecondaryButton(bt_volver);
+
+        ThemeUtil.styleContentPane(this);
         if (fromLogin) {
             cbx_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
                 "Selecciona un rol", "Aprendiz"
@@ -253,7 +202,6 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
         bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
 
         bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_volver.setText("<-");
         bt_volver.addActionListener(this::bt_volverActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -262,8 +210,8 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(263, Short.MAX_VALUE)
@@ -276,9 +224,9 @@ public class FRMRegistrarse extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

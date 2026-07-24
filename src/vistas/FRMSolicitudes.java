@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import modelo.Solicitud;
+import modelo.ThemeUtil;
 
 /**
  *
@@ -23,52 +24,19 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
      */
     public FRMSolicitudes() {
         initComponents();
-        
-        jPanel1.setBackground(new Color(40, 167, 69));
-        for (Component c : jPanel1.getComponents()) {
-            if (c instanceof JLabel) {
-                ((JLabel) c).setForeground(Color.WHITE);
-            }
-            if (c instanceof JButton) {
-                ((JButton) c).setBackground(new Color(33, 136, 56));
-                ((JButton) c).setForeground(Color.WHITE);
-                ((JButton) c).setFocusPainted(false);
-                ((JButton) c).setBorderPainted(false);
-            }
-        }
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
-        jLabel2.setForeground(Color.WHITE);
-        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
-        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
-        jLabel3.setForeground(new Color(40, 167, 69));
-        jLabel4.setFont(new Font("Arial", Font.PLAIN, 12));
-        jLabel4.setForeground(new Color(51, 51, 51));
-        tb_Solicitudes.setSelectionBackground(new Color(40, 167, 69));
-        tb_Solicitudes.setSelectionForeground(Color.WHITE);
-        tb_Solicitudes.setGridColor(new Color(220, 220, 220));
-        tb_Solicitudes.setRowHeight(28);
-        tb_Solicitudes.getTableHeader().setBackground(new Color(40, 167, 69));
-        tb_Solicitudes.getTableHeader().setForeground(Color.WHITE);
-        tb_Solicitudes.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
-        tb_Solicitudes.getTableHeader().setReorderingAllowed(false);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < tb_Solicitudes.getColumnCount(); i++) {
-            tb_Solicitudes.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-        bt_Cerrar_sesion.setBackground(Color.WHITE);
-        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
-        bt_Cerrar_sesion.setFocusPainted(false);
-        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_Cerrar_sesion.setOpaque(true);
-        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_volver.setBackground(Color.WHITE);
-        bt_volver.setForeground(new Color(40, 167, 69));
-        bt_volver.setFocusPainted(false);
-        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_volver.setOpaque(true);
-        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.getContentPane().setBackground(new Color(245, 245, 245));
+
+        ThemeUtil.styleHeader(jPanel1);
+        jLabel1.setFont(ThemeUtil.FONT_TITLE);
+        ThemeUtil.styleLabel(jLabel2);
+
+        ThemeUtil.styleSectionTitle(jLabel3);
+        ThemeUtil.styleLabel(jLabel4);
+
+        ThemeUtil.styleTable(tb_Solicitudes);
+        ThemeUtil.styleSecondaryButton(bt_Cerrar_sesion);
+        ThemeUtil.styleSecondaryButton(bt_volver);
+
+        ThemeUtil.styleContentPane(this);
         addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
                 javax.swing.JDesktopPane dp = escritorio;
@@ -148,7 +116,6 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
         bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
 
         bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_volver.setText("<-");
         bt_volver.addActionListener(this::bt_volverActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -157,7 +124,7 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(212, 212, 212))
@@ -172,9 +139,9 @@ public class FRMSolicitudes extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

@@ -11,6 +11,7 @@ import modelo.Ambiente;
 import modelo.Articulo;
 import modelo.ConexionBD;
 import modelo.InventarioAmbiente;
+import modelo.ThemeUtil;
 
 public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
 
@@ -26,73 +27,29 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
          bt_eliminar.setVisible(false);
 
          initComponents();
-         
-         jPanel1.setBackground(new Color(40, 167, 69));
-         for (Component c : jPanel1.getComponents()) {
-             if (c instanceof JLabel) {
-                 ((JLabel) c).setForeground(Color.WHITE);
-             }
-             if (c instanceof JButton) {
-                 ((JButton) c).setBackground(new Color(33, 136, 56));
-                 ((JButton) c).setForeground(Color.WHITE);
-                 ((JButton) c).setFocusPainted(false);
-                 ((JButton) c).setBorderPainted(false);
-             }
-         }
-         jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
-         jLabel2.setForeground(Color.WHITE);
-         jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
-         jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
-         jLabel3.setForeground(new Color(40, 167, 69));
-         
-         txt_Ambiente.setBorder(BorderFactory.createCompoundBorder(
-             new LineBorder(new Color(206, 212, 218), 1, true),
-             BorderFactory.createEmptyBorder(5, 8, 5, 8)
-         ));
-         txt_Ambiente.setFont(new Font("Arial", Font.PLAIN, 13));
-         txt_ubicacion.setBorder(BorderFactory.createCompoundBorder(
-             new LineBorder(new Color(206, 212, 218), 1, true),
-             BorderFactory.createEmptyBorder(5, 8, 5, 8)
-         ));
-         txt_ubicacion.setFont(new Font("Arial", Font.PLAIN, 13));
-         bt_crearAmbiente.setBackground(new Color(40, 167, 69));
-         bt_crearAmbiente.setForeground(Color.WHITE);
-         bt_crearAmbiente.setFocusPainted(false);
-         bt_crearAmbiente.setBorderPainted(false);
-         bt_crearAmbiente.setOpaque(true);
-         bt_crearAmbiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-         bt_añadirArticulo.setBackground(new Color(40, 167, 69));
-         bt_añadirArticulo.setForeground(Color.WHITE);
-         bt_añadirArticulo.setFocusPainted(false);
-         bt_añadirArticulo.setBorderPainted(false);
-         bt_añadirArticulo.setOpaque(true);
-         bt_añadirArticulo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-         bt_Cancelar.setBackground(Color.WHITE);
-         bt_Cancelar.setForeground(new Color(40, 167, 69));
-         bt_Cancelar.setFocusPainted(false);
-         bt_Cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-         bt_Cancelar.setOpaque(true);
-         bt_Cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-         bt_Cerrar_sesion.setBackground(Color.WHITE);
-         bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
-         bt_Cerrar_sesion.setFocusPainted(false);
-         bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-         bt_Cerrar_sesion.setOpaque(true);
-         bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-         bt_volver.setBackground(Color.WHITE);
-         bt_volver.setForeground(new Color(40, 167, 69));
-         bt_volver.setFocusPainted(false);
-         bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-         bt_volver.setOpaque(true);
-         bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-         bt_eliminar.setBackground(Color.WHITE);
-         bt_eliminar.setForeground(new Color(40, 167, 69));
-         bt_eliminar.setFocusPainted(false);
-         bt_eliminar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-         bt_eliminar.setOpaque(true);
-         bt_eliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-         
-         this.getContentPane().setBackground(new Color(245, 245, 245));
+
+         ThemeUtil.styleHeader(jPanel1);
+         jLabel1.setFont(ThemeUtil.FONT_TITLE);
+         ThemeUtil.styleLabel(jLabel2);
+
+         ThemeUtil.styleSectionTitle(jLabel3);
+         ThemeUtil.styleLabel(jLabel4);
+         ThemeUtil.styleLabel(jLabel5);
+         ThemeUtil.styleLabel(jLabel6);
+         ThemeUtil.styleLabel(jLabel7);
+
+         ThemeUtil.styleTextField(txt_Ambiente);
+         ThemeUtil.styleTextField(txt_ubicacion);
+         ThemeUtil.styleComboBox(cbx_tipo);
+
+         ThemeUtil.stylePrimaryButton(bt_crearAmbiente);
+         ThemeUtil.stylePrimaryButton(bt_añadirArticulo);
+         ThemeUtil.styleSecondaryButton(bt_Cancelar);
+         ThemeUtil.styleSecondaryButton(bt_Cerrar_sesion);
+         ThemeUtil.styleSecondaryButton(bt_volver);
+         ThemeUtil.styleSecondaryButton(bt_eliminar);
+
+         ThemeUtil.styleContentPane(this);
 
          bt_eliminar.addActionListener(this::bt_eliminarActionPerformed);
 
@@ -176,7 +133,6 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
         bt_Cerrar_sesion.addActionListener(this::bt_Cerrar_sesionActionPerformed);
 
         bt_volver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bt_volver.setText("<-");
         bt_volver.addActionListener(this::bt_volverActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -184,30 +140,27 @@ public class FRMNuevoAmbiente extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 69, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 63, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(bt_Cerrar_sesion)
-                                .addGap(217, 217, 217))))))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(bt_Cerrar_sesion)
+                        .addGap(217, 217, 217))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bt_volver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

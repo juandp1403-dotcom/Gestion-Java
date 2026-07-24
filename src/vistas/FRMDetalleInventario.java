@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import modelo.InventarioAmbiente;
 import modelo.Ambiente;
+import modelo.ThemeUtil;
 
 /**
  *
@@ -30,63 +31,27 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
      */
     public FRMDetalleInventario() {
         initComponents();
-        
-        jPanel1.setBackground(new Color(40, 167, 69));
-        for (Component c : jPanel1.getComponents()) {
-            if (c instanceof JLabel) {
-                ((JLabel) c).setForeground(Color.WHITE);
-            }
-            if (c instanceof JButton) {
-                ((JButton) c).setBackground(new Color(33, 136, 56));
-                ((JButton) c).setForeground(Color.WHITE);
-                ((JButton) c).setFocusPainted(false);
-                ((JButton) c).setBorderPainted(false);
-            }
-        }
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 16));
-        jLabel2.setForeground(Color.WHITE);
-        jLabel2.setFont(new Font("Arial", Font.PLAIN, 11));
-        lb_titulo.setFont(new Font("Arial", Font.BOLD, 14));
-        lb_titulo.setForeground(new Color(40, 167, 69));
-        jLabel3.setFont(new Font("Arial", Font.BOLD, 14));
-        jLabel3.setForeground(new Color(40, 167, 69));
-        
+
+        ThemeUtil.styleHeader(jPanel1);
+        jLabel1.setFont(ThemeUtil.FONT_TITLE);
+        ThemeUtil.styleLabel(jLabel2);
+
+        ThemeUtil.styleSectionTitle(lb_titulo);
+        ThemeUtil.styleSectionTitle(jLabel3);
+
         JButton[] botones = {bt_checklist, bt_NuevaSolicitud, bt_NuevoReporte, bt_editar_Inventario, bt_historial_Inventario};
         for (JButton b : botones) {
-            b.setBackground(new Color(40, 167, 69));
-            b.setForeground(Color.WHITE);
-            b.setFocusPainted(false);
-            b.setBorderPainted(false);
-            b.setOpaque(true);
-            b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            b.setFont(new Font("Arial", Font.BOLD, 11));
+            ThemeUtil.stylePrimaryButton(b, ThemeUtil.FONT_BTN_SM);
         }
-        tb_itemInventario.setSelectionBackground(new Color(40, 167, 69));
-        tb_itemInventario.setSelectionForeground(Color.WHITE);
-        tb_itemInventario.setGridColor(new Color(220, 220, 220));
-        tb_itemInventario.setRowHeight(28);
-        tb_itemInventario.getTableHeader().setBackground(new Color(40, 167, 69));
-        tb_itemInventario.getTableHeader().setForeground(Color.WHITE);
-        tb_itemInventario.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
-        tb_itemInventario.getTableHeader().setReorderingAllowed(false);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < tb_itemInventario.getColumnCount(); i++) {
-            tb_itemInventario.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-        bt_Cerrar_sesion.setBackground(Color.WHITE);
-        bt_Cerrar_sesion.setForeground(new Color(40, 167, 69));
-        bt_Cerrar_sesion.setFocusPainted(false);
-        bt_Cerrar_sesion.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_Cerrar_sesion.setOpaque(true);
-        bt_Cerrar_sesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_volver.setBackground(Color.WHITE);
-        bt_volver.setForeground(new Color(40, 167, 69));
-        bt_volver.setFocusPainted(false);
-        bt_volver.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_volver.setOpaque(true);
-        bt_volver.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.getContentPane().setBackground(new Color(245, 245, 245));
+
+        ThemeUtil.styleTable(tb_itemInventario);
+
+        ThemeUtil.styleSecondaryButton(bt_Cerrar_sesion);
+        ThemeUtil.styleSecondaryButton(bt_volver);
+
+        ThemeUtil.styleContentPane(this);
+        ThemeUtil.readOnly(txt_informacion);
+
         addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
                 javax.swing.JDesktopPane dp = escritorio;
@@ -222,8 +187,8 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addComponent(bt_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -241,8 +206,8 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                    .addComponent(bt_volver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bt_volver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -264,8 +229,10 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
         bt_editar_Inventario.setText("Editar Inventario ");
         bt_editar_Inventario.addActionListener(this::bt_editar_InventarioActionPerformed);
 
-        bt_historial_Inventario.setText("Histrorial de inventario");
+        bt_historial_Inventario.setText("Historial de inventario");
         bt_historial_Inventario.addActionListener(this::bt_historial_InventarioActionPerformed);
+
+        txt_informacion.setEditable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -326,7 +293,7 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -378,6 +345,15 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private Frame getFramePadre() {
+        java.awt.Component c = this;
+        while (c != null) {
+            if (c instanceof Frame) return (Frame) c;
+            c = c.getParent();
+        }
+        return null;
+    }
+
     private void bt_Cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Cerrar_sesionActionPerformed
        int opcion = javax.swing.JOptionPane.showConfirmDialog(
             this,
@@ -416,7 +392,7 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_historial_InventarioActionPerformed
 
     private void bt_NuevaSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_NuevaSolicitudActionPerformed
-       Frame padre = (Frame) SwingUtilities.getWindowAncestor(this);
+       Frame padre = getFramePadre();
 
        DGSolicitud dialog = new DGSolicitud(padre, true);
        dialog.setLocationRelativeTo(padre);
@@ -424,7 +400,7 @@ public class FRMDetalleInventario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_bt_NuevaSolicitudActionPerformed
 
     private void bt_NuevoReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_NuevoReporteActionPerformed
-        Frame padre = (Frame) SwingUtilities.getWindowAncestor(this);
+        Frame padre = getFramePadre();
 
        DGReporte dialog = new DGReporte(padre, true);
        dialog.setLocationRelativeTo(padre);

@@ -7,6 +7,7 @@ package vistas;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import modelo.ThemeUtil;
 
 /**
  *
@@ -22,27 +23,12 @@ public class DGReporte extends javax.swing.JDialog {
     public DGReporte(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        jPanel1.setBackground(Color.WHITE);
-        jPanel1.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(new Color(40, 167, 69), 2, true),
-            BorderFactory.createEmptyBorder(15, 15, 15, 15)
-        ));
-        jLabel1.setFont(new Font("Arial", Font.BOLD, 14));
-        jLabel1.setForeground(new Color(40, 167, 69));
-        bt_enviar.setBackground(new Color(40, 167, 69));
-        bt_enviar.setForeground(Color.WHITE);
-        bt_enviar.setFocusPainted(false);
-        bt_enviar.setBorderPainted(false);
-        bt_enviar.setOpaque(true);
-        bt_enviar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        bt_cancelar.setBackground(Color.WHITE);
-        bt_cancelar.setForeground(new Color(40, 167, 69));
-        bt_cancelar.setFocusPainted(false);
-        bt_cancelar.setBorder(new LineBorder(new Color(40, 167, 69), 2));
-        bt_cancelar.setOpaque(true);
-        bt_cancelar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.getContentPane().setBackground(new Color(245, 245, 245));
+
+        ThemeUtil.styleCard(jPanel1, 15);
+        ThemeUtil.styleSectionTitle(jLabel1);
+        ThemeUtil.stylePrimaryButton(bt_enviar);
+        ThemeUtil.styleSecondaryButton(bt_cancelar);
+        ThemeUtil.styleContentPane(this);
         tat_Reporte.setText("Describe lo necesario...");
         tat_Reporte.setForeground(Color.GRAY);
         tat_Reporte.addFocusListener(new java.awt.event.FocusAdapter() {
